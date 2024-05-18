@@ -20,7 +20,7 @@ public class Colour extends BaseEntity {
     private String name;
 
     @Column
-    private String hex_code;
+    private String hexCode;
 
     // sort by colour
     @OneToMany(mappedBy = "colour")
@@ -39,11 +39,11 @@ public class Colour extends BaseEntity {
     }
 
     public String getHexCode() {
-        return hex_code;
+        return hexCode;
     }
 
-    public void setHexCode(String hex_code) {
-        this.hex_code = hex_code;
+    public void setHexCode(String hexCode) {
+        this.hexCode = hexCode;
     }
 
     public List<Todo> getTodos() {
