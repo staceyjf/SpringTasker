@@ -4,7 +4,6 @@ import com.todo.todo.common.BaseEntity;
 import com.todo.todo.todo.Todo;
 
 import java.util.List;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
