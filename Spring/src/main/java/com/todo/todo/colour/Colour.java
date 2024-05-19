@@ -50,4 +50,9 @@ public class Colour extends BaseEntity {
         return todos;
     }
 
+    @Override
+    public String toString() {
+        return String.format("{ name='%s', hexCode='%s'}", name, hexCode);
+    }
+
 }
