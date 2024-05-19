@@ -3,6 +3,8 @@ package com.todo.todo.todo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    @Tag(name = "get", description = "GET methods of todo API")
+    @Operation(summary = "Get all todo tasks", description = "Get a list of all created todos. The response is a list of todo objects containing id, date created etc.")
     @GetMapping() // annotation to handle get requests
     public ResponseEntity<List<Todo>> findAllTodos() {
         List<Todo> allTodos = this.todoService.findAllTodos();

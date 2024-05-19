@@ -5,6 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +30,8 @@ public class ColourController {
     // adding the logger instance
     private static final Logger logger = LogManager.getLogger(ColourController.class);
 
+    @Tag(name = "post", description = "POST methods for todo API")
+    @Operation(summary = "Create a new colour", description = "Create a new colour categorization for todo. The response is a new Colour object with colour name and hex code")
     @PostMapping()
     // valid annotation ensure that the request body meets the validation
     // constraints (DTO)
@@ -47,6 +53,8 @@ public class ColourController {
         }
     }
 
+    @Tag(name = "get", description = "GET methods of todo API")
+    @Operation(summary = "Get all colours", description = "Get a list of all available colour categorization. The response is a list of colour objects containing colour name and hex code.")
     @GetMapping()
     public ResponseEntity<List<Colour>> findAllColours() {
         List<Colour> allColours = this.colourService.findAll();

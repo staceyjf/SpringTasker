@@ -2,6 +2,8 @@
 
 A fullstack todo powered by React, Spring and mySql
 
+API documentation UI: http://localhost:8080/swagger-ui/index.html 
+
 <!-- <div align="center">
 https://miro.com/app/board/uXjVKG9EJno=/
   <img src="./brief/homepage.png" alt="Homepage Screenshot" width="700">
