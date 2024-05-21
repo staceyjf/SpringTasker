@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.todo.todo.colour.ColourService;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Service // handles business logic
 @Transactional // each method is wrapped in a transaction
@@ -26,6 +27,11 @@ public class TodoService {
 
     public List<Todo> findAllTodos() {
         return this.repo.findAll();
+    }
+
+    public Todo createTodo(@Valid CreateTodoDTO data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createTodo'");
     }
 
     // TASK add find by id, create, delete, update

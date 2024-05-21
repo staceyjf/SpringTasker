@@ -26,6 +26,12 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    @PostMapping()
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody CreateTodoDTO data) {
+        Todo createdTodo = this.todoService.createTodo(data);
+        return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
+    }
+
     @Tag(name = "get", description = "GET methods of todo API")
     @Operation(summary = "Get all todo tasks", description = "Get a list of all created todos. The response is a list of todo objects containing id, date created etc.")
     @GetMapping() // annotation to handle get requests
