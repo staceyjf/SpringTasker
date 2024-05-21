@@ -32,6 +32,4 @@ public class ColourService {
         return this.repo.findAll();
     }
 
-    // TASK: add delete,
-
 }

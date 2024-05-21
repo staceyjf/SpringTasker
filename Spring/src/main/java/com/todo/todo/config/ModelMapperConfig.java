@@ -6,6 +6,9 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.todo.todo.colour.Colour;
+import com.todo.todo.colour.CreateColourDTO;
+
 @Configuration
 public class ModelMapperConfig {
 
@@ -14,9 +17,8 @@ public class ModelMapperConfig {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setSkipNullEnabled(true);
         mapper.typeMap(String.class, String.class).setConverter(new StringTrimConverter());
-        // mapper.typeMap(CreateCategoryDTO.class, Category.class)
-        // .addMappings(m -> m.using(new
-        // LowerCaseConverter()).map(CreateCategoryDTO::getName, Category::setName));
+        mapper.typeMap(CreateColourDTO.class, Colour.class)
+                .addMappings(m -> m.using(new LowerCaseConverter()).map(CreateColourDTO::getName, Colour::setName));
         return mapper;
     }
 
@@ -32,15 +34,15 @@ public class ModelMapperConfig {
 
     }
 
-    // private class LowerCaseConverter implements Converter<String, String> {
+    private class LowerCaseConverter implements Converter<String, String> {
 
-    // @Override
-    // public String convert(MappingContext<String, String> context) {
-    // if (context.getSource() == null) {
-    // return null;
-    // }
-    // return context.getSource().toLowerCase().trim();
-    // }
+        @Override
+        public String convert(MappingContext<String, String> context) {
+            if (context.getSource() == null) {
+                return null;
+            }
+            return context.getSource().toLowerCase().trim();
+        }
+    }
 
-    // }
 }
