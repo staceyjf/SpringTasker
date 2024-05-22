@@ -51,6 +51,10 @@ public class TodoService {
         return this.repo.findAll();
     }
 
+    public Optional<Todo> findById(Long id) {
+        return this.repo.findById(id);
+    }
+
     // TASK add find by id, create, delete, update
 
 }
