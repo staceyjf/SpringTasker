@@ -10,9 +10,6 @@ import jakarta.validation.constraints.Size;
 
 public class CreateTodoDTO {
 
-    @FutureOrPresent // ensure its set today or in the future
-    private LocalDate dueDate;
-
     @NotBlank
     @Size(max = 50, message = "Title should be smaller than 50 characters")
     private String title;
@@ -20,6 +17,9 @@ public class CreateTodoDTO {
     @NotBlank
     @Size(max = 200, message = "Task should be smaller than 200 characters")
     private String task;
+
+    @FutureOrPresent // ensure its set today or in the future
+    private LocalDate dueDate;
 
     // initial set the task to in complete
     private Boolean isComplete = false;

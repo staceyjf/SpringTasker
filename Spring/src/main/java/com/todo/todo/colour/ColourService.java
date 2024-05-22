@@ -1,6 +1,8 @@
 package com.todo.todo.colour;
 
 import java.util.List;
+import java.util.Locale.Category;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,11 @@ public class ColourService {
 
     public List<Colour> findAll() {
         return this.repo.findAll();
+    }
+
+    // no controller as this method is accessed by the todo domain
+    public Optional<Colour> findById(Long id) {
+        return this.repo.findById(id);
     }
 
 }

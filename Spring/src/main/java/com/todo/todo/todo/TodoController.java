@@ -3,6 +3,9 @@ package com.todo.todo.todo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todo.todo.colour.ColourController;
+import com.todo.todo.exceptions.ServiceValidationException;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -10,6 +13,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +31,16 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    private static final Logger logger = LogManager.getLogger(ColourController.class);
+
+    // errors bubble up and are handled by the globalExceptionHandler
+
+    @Tag(name = "POST", description = "POST methods of todo API")
+    @Operation(summary = "Create a new Todo task", description = "Create a new Todo task. The response is a new Todo object with title, task description, date created, due date and isComplete. ")
     @PostMapping()
-    public ResponseEntity<Todo> createTodo(@Valid @RequestBody CreateTodoDTO data) {
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody CreateTodoDTO data) throws ServiceValidationException {
         Todo createdTodo = this.todoService.createTodo(data);
+        logger.info("Responding with new colour: " + createdTodo);
         return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
     }
 
@@ -37,6 +49,7 @@ public class TodoController {
     @GetMapping() // annotation to handle get requests
     public ResponseEntity<List<Todo>> findAllTodos() {
         List<Todo> allTodos = this.todoService.findAllTodos();
+        logger.info("Responding with a list of todo tasks: " + allTodos);
         return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 }

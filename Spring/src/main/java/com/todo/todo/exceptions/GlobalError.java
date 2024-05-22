@@ -1,7 +1,6 @@
 package com.todo.todo.exceptions;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 import org.springframework.http.HttpStatus;
 
@@ -9,30 +8,43 @@ import org.springframework.http.HttpStatus;
 public class GlobalError {
     private HttpStatus status;
     private LocalDateTime timestamp;
-    private String apiMessage;
+    private String errorMessage;
+    private String exceptionClass;
     private String debugMessage;
-
-    public GlobalError(HttpStatus status) {
-        this.timestamp = LocalDateTime.now();
-        this.status = status;
-    }
 
     public GlobalError(HttpStatus status, Throwable ex) {
         this.timestamp = LocalDateTime.now();
         this.status = status;
-        this.apiMessage = ex.getMessage();
-        // include StackTrace to show the method calls that led to the exception
-        this.debugMessage = ex.getClass().getSimpleName() + ": " + ex.getMessage() + "\n"
-                + Arrays.toString(ex.getStackTrace());
+        this.errorMessage = ex.getLocalizedMessage();
+        this.exceptionClass = ex.getClass().getSimpleName();
+        this.debugMessage = ex.getLocalizedMessage();
+        // + "\n"
+        // + ExceptionUtils.getStackTrace(ex);
     }
 
     // return the debug message for the logger
+    public HttpStatus getStatus() {
+        return this.status;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return this.timestamp;
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
+
+    public String getExceptionClass() {
+        return this.exceptionClass;
+    }
+
     public String getDebugMessage() {
         return this.debugMessage;
     }
 
-    public HttpStatus getStatusCode() {
-        return this.status;
+    public void setErrorMessage(String ErrorMessage) {
+        this.errorMessage = ErrorMessage;
     }
 
 }

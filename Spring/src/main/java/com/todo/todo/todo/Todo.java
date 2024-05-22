@@ -71,6 +71,10 @@ public class Todo extends BaseEntity {
         this.isComplete = isComplete;
     }
 
+    public Colour getColour() {
+        return colour;
+    }
+
     public void setColour(Colour colour) {
         this.colour = colour;
     }

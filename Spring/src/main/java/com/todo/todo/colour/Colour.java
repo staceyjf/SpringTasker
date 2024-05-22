@@ -6,6 +6,7 @@ import com.todo.todo.todo.Todo;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ public class Colour extends BaseEntity {
     @Column
     private String hexCode;
 
-    // sort by colour
+    // ability to sort by colour
     @OneToMany(mappedBy = "colour")
     @JsonIgnoreProperties("colour")
     private List<Todo> todos;

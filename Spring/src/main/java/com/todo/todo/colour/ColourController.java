@@ -31,30 +31,20 @@ public class ColourController {
     private static final Logger logger = LogManager.getLogger(ColourController.class);
 
     @Tag(name = "post", description = "POST methods for todo API")
-    @Operation(summary = "Create a new colour", description = "Create a new colour categorization for todo. The response is a new Colour object with colour name and hex code")
+    @Operation(summary = "Create a new colour", description = "Create a new colour categorization for todo. The response is a new Colour object with id, createdAt, colour name, hex code")
     @PostMapping()
     // valid annotation ensure that the request body meets the validation
     // constraints (DTO)
     // if it doesn't you will get a MethodArgumentNotValidException -> 400 (bad
     // request)
-    // this is not caught by the catch block
     public ResponseEntity<Colour> createColour(@Valid @RequestBody CreateColourDTO data) {
-        try {
-            Colour newColour = this.colourService.create(data);
-            logger.info("Responding with new colour: " + newColour);
-            return new ResponseEntity<>(newColour, HttpStatus.CREATED);
-        } catch (Exception e) {
-            // catch all error
-            // eg there is no specific exception for a SQLException
-            // if the new colour fails to be saved in the db, we will send the client a 500
-            // (InternalSever Error)
-            logger.error("Failed to create new colour", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Colour newColour = this.colourService.create(data);
+        logger.info("Responding with new colour: " + newColour);
+        return new ResponseEntity<>(newColour, HttpStatus.CREATED);
     }
 
     @Tag(name = "get", description = "GET methods of todo API")
-    @Operation(summary = "Get all colours", description = "Get a list of all available colour categorization. The response is a list of colour objects containing colour name and hex code.")
+    @Operation(summary = "Get all colours", description = "Get a list of all available colour categorizations. The response is a list of colour objects containing colour name and hex code.")
     @GetMapping()
     public ResponseEntity<List<Colour>> findAllColours() {
         List<Colour> allColours = this.colourService.findAll();
