@@ -56,4 +56,9 @@ public class Colour extends BaseEntity {
         return String.format("{ name='%s', hexCode='%s'}", name, hexCode);
     }
 
+    public void removeTodo(Todo foundTodo) {
+        this.todos.remove(foundTodo);
+        foundTodo.setColour(null);
+    }
+
 }

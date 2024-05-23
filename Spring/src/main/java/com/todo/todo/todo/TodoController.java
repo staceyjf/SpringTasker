@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,7 +67,7 @@ public class TodoController {
     }
 
     @Tag(name = "patch", description = "PATCH methods of todo API")
-    @Operation(summary = "Update a todo task by Id", description = "Edit existing todo tasks. The response is a Todo object with title, task description, date created, due date and isComplete.")
+    @Operation(summary = "Update a todo task by Id", description = "Edit an existing todo task by id. The response is a Todo object with title, task description, date created, due date and isComplete.")
     @PatchMapping("/{id}")
     public ResponseEntity<Todo> updateTodoById(@PathVariable Long id, @Valid @RequestBody UpdateTodoDTO data)
             throws NotFoundByIdException, ServiceValidationException {
@@ -74,5 +75,18 @@ public class TodoController {
         Todo updatedTodo = maybeTodo.orElseThrow(() -> new NotFoundByIdException(Todo.class, id));
         logger.info("Responding with the updated todo: " + updatedTodo);
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+    }
+
+    @Tag(name = "delete", description = "DELETE methods of todo API")
+    @Operation(summary = "Delete a todo task by Id", description = "Delete an existing todo task by id.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodoById(@PathVariable Long id)
+            throws NotFoundByIdException, ServiceValidationException {
+        boolean isDeleted = this.todoService.deleteById(id);
+        if (!isDeleted) {
+            throw new NotFoundByIdException(Todo.class, id);
+        }
+        logger.info(String.format("Todo with id: %d has been deleted ", id));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

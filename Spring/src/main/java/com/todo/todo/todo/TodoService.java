@@ -65,7 +65,7 @@ public class TodoService {
 
         Todo foundTodo = maybeTodo.get();
 
-        // find the corresponding colour
+        // find the corresponding colour object
         Optional<Colour> maybeColour = this.colourService.findById(data.getColourId());
         ValidationErrors errors = new ValidationErrors();
 
@@ -82,6 +82,32 @@ public class TodoService {
         mapper.map(data, foundTodo);
         Todo updatedTodo = this.repo.save(foundTodo);
         return Optional.of(updatedTodo);
+    }
+
+    public boolean deleteById(Long id) throws ServiceValidationException {
+        Optional<Todo> maybeTodo = this.findById(id);
+        if (maybeTodo.isEmpty()) {
+            return false;
+        }
+
+        Todo foundTodo = maybeTodo.get();
+
+        // find the corresponding colour object
+        Colour associatedColour = foundTodo.getColour();
+        ValidationErrors errors = new ValidationErrors();
+
+        if (associatedColour == null) {
+            errors.addError("colour", String.format("Colour has no associated todo tasks"));
+        } else {
+            associatedColour.removeTodo(foundTodo);
+        }
+        ;
+        if (errors.hasErrors()) {
+            throw new ServiceValidationException(errors);
+        }
+
+        this.repo.delete(foundTodo);
+        return true;
     }
 
 }
