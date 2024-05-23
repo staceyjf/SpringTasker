@@ -13,7 +13,6 @@ import com.todo.todo.exceptions.ServiceValidationException;
 import com.todo.todo.exceptions.ValidationErrors;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 @Service // handles business logic
 @Transactional // each method is wrapped in a transaction
