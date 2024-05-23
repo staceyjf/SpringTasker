@@ -13,6 +13,7 @@ import com.todo.todo.exceptions.ServiceValidationException;
 import com.todo.todo.exceptions.ValidationErrors;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @Service // handles business logic
 @Transactional // each method is wrapped in a transaction
@@ -55,6 +56,32 @@ public class TodoService {
         return this.repo.findById(id);
     }
 
-    // TASK add find by id, create, delete, update
+    public Optional<Todo> updateById(Long id, UpdateTodoDTO data) throws ServiceValidationException {
+        // find the task
+        Optional<Todo> maybeTodo = this.findById(id);
+        if (maybeTodo.isEmpty()) {
+            return maybeTodo;
+        }
+
+        Todo foundTodo = maybeTodo.get();
+
+        // find the corresponding colour
+        Optional<Colour> maybeColour = this.colourService.findById(data.getColourId());
+        ValidationErrors errors = new ValidationErrors();
+
+        if (maybeColour.isEmpty()) {
+            errors.addError("colour", String.format("Colour with id %s does not exist", data.getColourId()));
+        } else {
+            foundTodo.setColour(maybeColour.get());
+        }
+
+        if (errors.hasErrors()) {
+            throw new ServiceValidationException(errors);
+        }
+
+        mapper.map(data, foundTodo);
+        Todo updatedTodo = this.repo.save(foundTodo);
+        return Optional.of(updatedTodo);
+    }
 
 }

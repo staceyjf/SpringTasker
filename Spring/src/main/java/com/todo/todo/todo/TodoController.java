@@ -58,10 +58,21 @@ public class TodoController {
     @Tag(name = "get", description = "GET methods of todo API")
     @Operation(summary = "Get todo task by Id", description = "Get a specific todo task by its id. The response is a Todo object with title, task description, date created, due date and isComplete.")
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> findPostById(@PathVariable Long id) throws NotFoundByIdException {
+    public ResponseEntity<Todo> findTodoById(@PathVariable Long id) throws NotFoundByIdException {
         Optional<Todo> maybePost = this.todoService.findById(id);
         Todo foundTodo = maybePost.orElseThrow(() -> new NotFoundByIdException(Todo.class, id));
         logger.info("Responding with the found todo: " + foundTodo);
         return new ResponseEntity<>(foundTodo, HttpStatus.OK);
+    }
+
+    @Tag(name = "patch", description = "PATCH methods of todo API")
+    @Operation(summary = "Update a todo task by Id", description = "Edit existing todo tasks. The response is a Todo object with title, task description, date created, due date and isComplete.")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Todo> updateTodoById(@PathVariable Long id, @Valid @RequestBody UpdateTodoDTO data)
+            throws NotFoundByIdException, ServiceValidationException {
+        Optional<Todo> maybeTodo = this.todoService.updateById(id, data);
+        Todo updatedTodo = maybeTodo.orElseThrow(() -> new NotFoundByIdException(Todo.class, id));
+        logger.info("Responding with the updated todo: " + updatedTodo);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 }

@@ -78,4 +78,17 @@ public class Todo extends BaseEntity {
     public void setColour(Colour colour) {
         this.colour = colour;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "{id: %d, createdDate: %s, dueDate: %s, title: '%s', task: '%s', isComplete: %b, colour: %s}",
+                getId(),
+                getCreatedAt(),
+                dueDate != null ? dueDate.toString() : "null",
+                title,
+                task,
+                isComplete,
+                colour != null ? colour.toString() : "null");
+    }
 }
