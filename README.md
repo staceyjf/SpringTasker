@@ -44,7 +44,7 @@ theMarketPlace is a React front-end e-commerce application designed to provide u
 
 1. **Dialog element**: Issues with rendering and understanding that adding a display property to the dialog itself would negate the close() method which meant that the dialog effectively would not "close".
 2. **CSS Positioning**: Working across Grid and Flexbox to get the best of each.
-3. **Responsive Design**: Trying to manage how the app would be experienced across a range of device sizes - using Polypane to guide my choices to help shape a responsive experience.  -->
+3. **Responsive Design**: Trying to manage how the app would be experienced across a range of device sizes - using Polypane to guide my choices to help shape a responsive experience.  
 
 ## To-Dos
 
