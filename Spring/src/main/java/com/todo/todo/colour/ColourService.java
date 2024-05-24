@@ -25,7 +25,7 @@ public class ColourService {
 
     public Colour create(@Valid CreateColourDTO data) {
         Colour newColour = mapper.map(data, Colour.class); // ModelMapper auto maps this for us
-        logger.info("Created new colour: " + newColour);
+        logger.info("Created new colour in mySql: " + newColour);
         return this.repo.save(newColour);
     }
 

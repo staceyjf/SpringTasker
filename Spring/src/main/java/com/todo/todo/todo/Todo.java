@@ -26,6 +26,7 @@ public class Todo extends BaseEntity {
     private String title;
 
     @Column(columnDefinition = "LONGTEXT")
+    @NotNull
     private String task;
 
     @Column

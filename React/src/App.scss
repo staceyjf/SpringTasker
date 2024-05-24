@@ -1,0 +1,9 @@
+// partials
+@use "./scss/partials/brand-variables" as bv;
+@use "./scss/partials/queries" as q;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

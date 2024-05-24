@@ -3,6 +3,8 @@ package com.todo.todo.todo;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,15 @@ import com.todo.todo.colour.ColourService;
 import com.todo.todo.exceptions.ServiceValidationException;
 import com.todo.todo.exceptions.ValidationErrors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import jakarta.transaction.Transactional;
 
 @Service // handles business logic
 @Transactional // each method is wrapped in a transaction
 public class TodoService {
+     private static final Logger logger = LogManager.getLogger(ColourService.class);
     @Autowired // enables dependency injection - a pattern which helps build loosely coupled
                // code (easier to test)
     private ModelMapper mapper;
@@ -42,6 +48,8 @@ public class TodoService {
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }
+
+        logger.info("Created new Todo in mySql: " + newTodo);
 
         return this.repo.save(newTodo);
     }
@@ -106,6 +114,7 @@ public class TodoService {
         }
 
         this.repo.delete(foundTodo);
+         logger.info("Todo in mySql: " + foundTodo);
         return true;
     }
 

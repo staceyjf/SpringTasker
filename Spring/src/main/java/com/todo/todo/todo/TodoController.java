@@ -45,7 +45,7 @@ public class TodoController {
         return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
     }
 
-    @Tag(name = "get", description = "GET methods of todo API")
+    @Tag(name = "GET", description = "GET methods of todo API")
     @Operation(summary = "Get all todo tasks", description = "Get a list of all created todos. The response is a list of todo objects containing id, date created etc.")
     @GetMapping() // annotation to handle get requests
     public ResponseEntity<List<Todo>> findAllTodos() {
@@ -54,7 +54,7 @@ public class TodoController {
         return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
-    @Tag(name = "get", description = "GET methods of todo API")
+    @Tag(name = "GET", description = "GET methods of todo API")
     @Operation(summary = "Get todo task by Id", description = "Get a specific todo task by its id. The response is a Todo object with title, task description, date created, due date and isComplete.")
     @GetMapping("/{id}")
     public ResponseEntity<Todo> findTodoById(@PathVariable Long id) throws NotFoundByIdException {
@@ -64,7 +64,7 @@ public class TodoController {
         return new ResponseEntity<>(foundTodo, HttpStatus.OK);
     }
 
-    @Tag(name = "patch", description = "PATCH methods of todo API")
+    @Tag(name = "PATCH", description = "PATCH methods of todo API")
     @Operation(summary = "Update a todo task by Id", description = "Edit an existing todo task by id. The response is a Todo object with title, task description, date created, due date and isComplete.")
     @PatchMapping("/{id}")
     public ResponseEntity<Todo> updateTodoById(@PathVariable Long id, @Valid @RequestBody UpdateTodoDTO data)
@@ -75,7 +75,7 @@ public class TodoController {
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 
-    @Tag(name = "delete", description = "DELETE methods of todo API")
+    @Tag(name = "DELETE", description = "DELETE methods of todo API")
     @Operation(summary = "Delete a todo task by Id", description = "Delete an existing todo task by id.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodoById(@PathVariable Long id)
