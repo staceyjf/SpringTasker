@@ -13,5 +13,5 @@ export interface TodoResponse {
   title: string;
   task: string;
   isComplete: boolean;
-  colour: ColourResponse;
+  colourId: number;
 }

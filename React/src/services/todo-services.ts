@@ -1,3 +1,4 @@
+import { TodoFormData } from "../components/TodoForm/TodoSchema";
 import { baseUrl } from "./api-config";
 import { TodoResponse } from "./api-responses.interfaces";
 
@@ -22,20 +23,22 @@ export const getTodoById = async (id: number): Promise<TodoResponse> => {
   return await response.json();
 };
 
-// export const createTodo = async (data: TodoFormData): Promise<TodoResponse> => {
-//   const response = await fetch(baseUrl + "/todos", {
-//     method: "POST",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (!response.ok) {
-//     console.warn(response.status);
-//     throw new Error("Oops, something went wrong while trying to create a new Todo. Please try again.");
-//   }
-//   return await response.json();
-// };
+export const createTodo = async (data: TodoFormData): Promise<TodoResponse> => {
+  const response = await fetch(baseUrl + "/todos", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.warn(response.status);
+    throw new Error(
+      "Oops, something went wrong while trying to create a new Todo. Please try again."
+    );
+  }
+  return await response.json();
+};
 
 // export const updateTodo = async (id: number, data:TodoResponse): Promise<TodoResponse> => {
 //   const response = await fetch(`${baseUrl}/todos/${id}`, {

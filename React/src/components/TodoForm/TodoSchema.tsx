@@ -14,7 +14,7 @@ export const schema = z.object({
     .min(1)
     .max(200, "Task should be smaller than 200 characters"),
   isComplete: z.boolean().optional(),
-  colour: z.coerce.number().optional(),
+  colourId: z.coerce.number().optional(),
 });
 
 export type TodoFormData = z.infer<typeof schema>;
