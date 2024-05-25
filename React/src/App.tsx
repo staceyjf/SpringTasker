@@ -1,7 +1,7 @@
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import TodoIndex from "./pages/TodoIndex/TodoIndex";
 import "./App.scss";
-import NewTodoFormPage from "./pages/NewTodoFormPage/NewTodoFormPage";
+import AddTodoPage from "./pages/AddTodoPage/AddTodoPage";
 import ColoursContextProvider from "./context/ColourContextProvider";
 
 function App() {
@@ -11,11 +11,11 @@ function App() {
         <BrowserRouter>
           <nav>
             <NavLink to="/">HOME</NavLink>
-            <NavLink to="/todo/new">ADD TODO</NavLink>
+            <NavLink to="/todo/add">ADD TODO</NavLink>
           </nav>
           <Routes>
             <Route path="/" element={<TodoIndex />} />
-            <Route path="/todo/new" element={<NewTodoFormPage />} />
+            <Route path="/todo/add" element={<AddTodoPage />} />
           </Routes>
         </BrowserRouter>
       </ColoursContextProvider>

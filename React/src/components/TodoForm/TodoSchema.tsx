@@ -1,10 +1,8 @@
 import * as z from "zod";
 
+//TASK Change colour ID to be one of the colour options
+//TASK How do i set it to a date if it needs a string for defaults
 export const schema = z.object({
-  dueDate: z.coerce
-    .date()
-    .min(new Date(), "Due Dates must be set from today onwards")
-    .optional(),
   title: z
     .string()
     .min(1, "Titles need to be longer than ")
@@ -13,8 +11,9 @@ export const schema = z.object({
     .string()
     .min(1)
     .max(200, "Task should be smaller than 200 characters"),
+  dueDate: z.string().optional(),
   isComplete: z.boolean().optional(),
-  colourId: z.coerce.number().optional(),
+  colourId: z.string(),
 });
 
 export type TodoFormData = z.infer<typeof schema>;
