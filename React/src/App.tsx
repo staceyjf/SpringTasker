@@ -10,11 +10,11 @@ function App() {
       <ColoursContextProvider>
         <BrowserRouter>
           <nav>
-            <NavLink to="/">HOME</NavLink>
+            <NavLink to="/todo">HOME</NavLink>
             <NavLink to="/todo/add">ADD TODO</NavLink>
           </nav>
           <Routes>
-            <Route path="/" element={<TodoIndex />} />
+            <Route path="/todo" element={<TodoIndex />} />
             <Route path="/todo/add" element={<AddTodoPage />} />
           </Routes>
         </BrowserRouter>

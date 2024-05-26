@@ -3,7 +3,7 @@ export interface ColourResponse {
   createdAt: string;
   name: string;
   hexcode: string;
-  todos: TodoResponse;
+  todos: TodoResponse[];
 }
 
 export interface TodoResponse {
@@ -13,5 +13,5 @@ export interface TodoResponse {
   title: string;
   task: string;
   isComplete: boolean;
-  colourId: number;
+  colour: ColourResponse;
 }
