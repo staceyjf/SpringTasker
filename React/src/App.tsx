@@ -1,8 +1,9 @@
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
-import TodoIndex from "./pages/TodoIndex/TodoIndex";
-import "./App.scss";
-import AddTodoPage from "./pages/AddTodoPage/AddTodoPage";
 import ColoursContextProvider from "./context/ColourContextProvider";
+import TodoIndex from "./pages/TodoIndex/TodoIndex";
+import AddTodoPage from "./pages/AddTodoPage/AddTodoPage";
+import UpdateTodoPage from "./pages/UpdateTodoPage/UpdateTodoPage";
+import "./App.scss";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/todo" element={<TodoIndex />} />
             <Route path="/todo/add" element={<AddTodoPage />} />
+            <Route path="/todo/edit/:id" element={<UpdateTodoPage />} />
           </Routes>
         </BrowserRouter>
       </ColoursContextProvider>

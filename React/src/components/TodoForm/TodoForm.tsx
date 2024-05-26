@@ -10,7 +10,7 @@ interface TodoFormProps {
   mode: string;
 }
 
-const NewTodoForm = ({
+const TodoForm = ({
   handleFormSubmit,
   errors,
   register,
@@ -58,4 +58,4 @@ const NewTodoForm = ({
   );
 };
 
-export default NewTodoForm;
+export default TodoForm;

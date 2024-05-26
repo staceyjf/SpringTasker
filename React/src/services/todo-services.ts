@@ -40,20 +40,25 @@ export const createTodo = async (data: TodoFormData): Promise<TodoResponse> => {
   return await response.json();
 };
 
-// export const updateTodo = async (id: number, data:TodoResponse): Promise<TodoResponse> => {
-//   const response = await fetch(`${baseUrl}/todos/${id}`, {
-//     method: "PATCH",
-//     body: JSON.stringify(data),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   if (!response.ok) {
-//     console.warn(response.status);
-//     throw new Error(`Oops, something went wrong while trying to update Todo with id: ${id}. Please try again.`);
-//   }
-//   return await response.json();
-// };
+export const updateTodoById = async (
+  id: number,
+  data: TodoFormData
+): Promise<TodoResponse> => {
+  const response = await fetch(`${baseUrl}/todos/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.warn(response.status);
+    throw new Error(
+      `Oops, something went wrong while trying to update Todo with id: ${id}. Please try again.`
+    );
+  }
+  return await response.json();
+};
 
 export const deleteTodoById = async (id: number) => {
   const response = await fetch(`${baseUrl}/todos/${id}`, {

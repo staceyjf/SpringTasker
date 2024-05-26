@@ -5,7 +5,7 @@ import { TodoFormData } from "../../components/TodoForm/TodoSchema";
 import { createTodo } from "../../services/todo-services";
 import { schema } from "../../components/TodoForm/TodoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import NewTodoForm from "../../components/TodoForm/NewTodoForm";
+import TodoForm from "../../components/TodoForm/TodoForm";
 
 const AddTodoPage = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AddTodoPage = () => {
     createTodo(data)
       .then((data) => {
         console.log("Todo created", data);
-        navigate("/");
+        navigate("/todo");
         reset(defaultValues);
       })
       .catch((e: Error) => {
@@ -45,7 +45,7 @@ const AddTodoPage = () => {
       <h1>Create a new Todo task</h1>
       {/* TASK: Fix this to error message component */}
       {error && <p>Error: {error.message}</p>}
-      <NewTodoForm
+      <TodoForm
         handleFormSubmit={handleSubmit(onSubmit)}
         errors={errors}
         register={register}

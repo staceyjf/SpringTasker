@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllTodos, deleteTodoById } from "../../services/todo-services";
 import { TodoResponse } from "../../services/api-responses.interfaces";
 
@@ -13,12 +14,12 @@ const TodoIndex = () => {
   const [fetchStatus, setFetchStatus] = useState<String>("LOADING");
   const [openModal, setOpenModal] = useState(false);
   const [todoId, setTodoId] = useState<number | undefined>(undefined);
+  const navigate = useNavigate();
 
   // get all todos
   useEffect(() => {
     getAllTodos()
       .then((data) => {
-        console.log(data);
         setFetchStatus("SUCCESS");
         setTodos(data);
       })
@@ -29,7 +30,7 @@ const TodoIndex = () => {
       });
   }, []);
 
-  const handleDelete = (id: number | undefined) => {
+  const handleTodoDelete = (id: number | undefined) => {
     if (id !== undefined) {
       deleteTodoById(id)
         .then(() => {
@@ -41,13 +42,28 @@ const TodoIndex = () => {
         });
       setOpenModal(false);
     } else {
-      console.error("Id is undefined");
+      console.error("Id is undefined for deleting a todo by id");
       // TASK: Add some user UX for issues
     }
   };
 
-  const handleEdit = () => {
-    alert("update me");
+  const deleteTodoOnClick = (id: number | undefined) => {
+    if (id !== undefined) {
+      setTodoId(id);
+      setOpenModal(true);
+    } else {
+      console.error("id is undefined");
+      // TASK: ADD SOME ERROR MESSAGING
+    }
+  };
+
+  const handleTodoEdit = (id: number | undefined) => {
+    if (id !== undefined) {
+      navigate(`/todo/edit/${id}`);
+    } else {
+      console.error("Id is undefined for updating a todo by id");
+      // TASK: Add some user UX for issues
+    }
   };
 
   return (
@@ -67,8 +83,8 @@ const TodoIndex = () => {
             task={todo.task}
             isComplete={todo.isComplete}
             colourName={todo.colour.name}
-            setTodoId={setTodoId}
-            setOpenModal={setOpenModal}
+            deleteOnClick={deleteTodoOnClick}
+            handleEdit={handleTodoEdit}
           />
         ))}
       {openModal && (
@@ -76,7 +92,7 @@ const TodoIndex = () => {
           todoId={todoId}
           openModal={openModal}
           setOpenModal={setOpenModal}
-          handleDelete={handleDelete}
+          handleDelete={handleTodoDelete}
         />
       )}
     </main>

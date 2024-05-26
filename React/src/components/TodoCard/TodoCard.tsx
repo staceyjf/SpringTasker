@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // define the props
 interface TodoCardProps {
@@ -9,8 +10,8 @@ interface TodoCardProps {
   task: string;
   isComplete: boolean;
   colourName?: string; // optional
-  setTodoId: (id: number) => void;
-  setOpenModal: (open: boolean) => void;
+  deleteOnClick: (id: number | undefined) => void;
+  handleEdit: (id: number | undefined) => void;
 }
 
 const TodoCard = ({
@@ -21,19 +22,9 @@ const TodoCard = ({
   task,
   isComplete,
   colourName,
-  setTodoId,
-  setOpenModal,
+  deleteOnClick,
+  handleEdit,
 }: TodoCardProps) => {
-  const handleClick = () => {
-    if (id !== undefined) {
-      setTodoId(id);
-      setOpenModal(true);
-    } else {
-      console.error("id is undefined");
-      // TASK: ADD SOME ERROR MESSAGING
-    }
-  };
-
   return (
     <div>
       {id}
@@ -43,8 +34,11 @@ const TodoCard = ({
       {task}
       {isComplete}
       {colourName}
-      <Button variant="outlined" onClick={handleClick}>
-        x
+      <Button variant="outlined" onClick={() => handleEdit(id)}>
+        Update
+      </Button>
+      <Button variant="outlined" onClick={() => deleteOnClick(id)}>
+        <DeleteIcon />
       </Button>
     </div>
   );
