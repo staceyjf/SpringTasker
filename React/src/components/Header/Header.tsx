@@ -3,11 +3,7 @@ import { NavLink } from "react-router-dom";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import logo from "../../assets/SpringTaskerLogoSmall.png";
 
-interface HeaderTextProps {
-  headerText: string;
-}
-
-const Header = ({ headerText }: HeaderTextProps) => {
+const Header = () => {
   const theme = useTheme();
 
   return (

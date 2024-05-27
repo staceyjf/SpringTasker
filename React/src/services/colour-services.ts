@@ -7,5 +7,5 @@ export const getAllColours = async (): Promise<ColourResponse[]> => {
     throw new Error("Failed to fetch all colours. Please try again later");
   }
 
-  return response.json();
+  return await response.json();
 };

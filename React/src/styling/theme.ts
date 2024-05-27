@@ -14,9 +14,10 @@ let theme = createTheme({
   palette: {
     primary: {
       main: "#073B4C",
+      light: "#06D6A0",
     },
     secondary: {
-      main: "#06D6A0",
+      main: "#FFF",
     },
   },
   highlightOne: {

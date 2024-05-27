@@ -2,7 +2,7 @@ export interface ColourResponse {
   id: number;
   createdAt: string;
   name: string;
-  hexcode: string;
+  hexCode: string;
   todos: TodoResponse[];
 }
 

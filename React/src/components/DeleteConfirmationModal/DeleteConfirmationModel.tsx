@@ -4,6 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTheme } from "@mui/material";
 
 interface DeleteConfirmationModelProps {
   todoId: number | undefined;
@@ -18,6 +19,8 @@ const DeleteConfirmationModel = ({
   setOpenModal,
   handleDelete,
 }: DeleteConfirmationModelProps) => {
+  const theme = useTheme();
+
   return (
     <>
       <Dialog
@@ -42,7 +45,11 @@ const DeleteConfirmationModel = ({
           >
             Cancel
           </Button>
-          <Button onClick={() => handleDelete(todoId)} autoFocus>
+          <Button
+            color="primary"
+            onClick={() => handleDelete(todoId)}
+            autoFocus
+          >
             Delete Todo
           </Button>
         </DialogActions>

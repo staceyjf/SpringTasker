@@ -8,7 +8,22 @@ export const getAllTodos = async (): Promise<TodoResponse[]> => {
     console.warn(response.status);
     throw new Error("Failed to fetch all Todos. Please try again later");
   }
-  return await response.json();
+
+  const data = await response.json();
+
+  const formattedDateTodo = data.map((todo: TodoResponse) => {
+    return {
+      ...todo,
+      createdAt: new Date(todo.dueDate).toLocaleDateString("en-GB", {
+        dateStyle: "short",
+      }),
+      dueDate: new Date(todo.dueDate).toLocaleDateString("en-GB", {
+        dateStyle: "short",
+      }),
+    };
+  });
+
+  return formattedDateTodo;
 };
 
 export const getTodoById = async (id: number): Promise<TodoResponse> => {

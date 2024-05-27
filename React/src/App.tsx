@@ -40,7 +40,7 @@ function App() {
           >
             <ColoursContextProvider>
               <BrowserRouter>
-                <Header headerText="SpringTasker" />
+                <Header />
                 <Box
                   flexGrow={1}
                   display="flex"
@@ -49,6 +49,7 @@ function App() {
                   mt={1}
                   mb={1}
                   px={3}
+                  width="100%"
                 >
                   <Routes>
                     <Route path="/todo" element={<TodoIndex />} />
