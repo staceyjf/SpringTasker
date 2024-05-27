@@ -67,26 +67,30 @@ const TodoIndex = () => {
   };
 
   return (
-    <main>
+    <section>
       {fetchStatus === "LOADING" && <LoadingSpinner />}
       {fetchStatus === "FAILED" && (
         <StatusMessageBox severity="error" message={error?.message} />
       )}
-      {fetchStatus === "SUCCESS" &&
-        todos.map((todo: TodoResponse) => (
-          <TodoCard
-            key={todo.id}
-            id={todo.id}
-            createdAt={todo.createdAt}
-            dueDate={todo.dueDate}
-            title={todo.title}
-            task={todo.task}
-            isComplete={todo.isComplete}
-            colourName={todo.colour.name}
-            deleteOnClick={deleteTodoOnClick}
-            handleEdit={handleTodoEdit}
-          />
-        ))}
+      {fetchStatus === "SUCCESS" && (
+        <>
+          <h3>CURRENT TODOS</h3>
+          {todos.map((todo: TodoResponse) => (
+            <TodoCard
+              key={todo.id}
+              id={todo.id}
+              createdAt={todo.createdAt}
+              dueDate={todo.dueDate}
+              title={todo.title}
+              task={todo.task}
+              isComplete={todo.isComplete}
+              colourName={todo.colour.name}
+              deleteOnClick={deleteTodoOnClick}
+              handleEdit={handleTodoEdit}
+            />
+          ))}
+        </>
+      )}
       {openModal && (
         <DeleteConfirmationModel
           todoId={todoId}
@@ -95,7 +99,7 @@ const TodoIndex = () => {
           handleDelete={handleTodoDelete}
         />
       )}
-    </main>
+    </section>
   );
 };
 

@@ -14,9 +14,6 @@ import com.todo.todo.colour.ColourService;
 import com.todo.todo.exceptions.ServiceValidationException;
 import com.todo.todo.exceptions.ValidationErrors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import jakarta.transaction.Transactional;
 
 @Service // handles business logic
@@ -114,7 +111,6 @@ public class TodoService {
         }
 
         this.repo.delete(foundTodo);
-         logger.info("Todo in mySql: " + foundTodo);
         return true;
     }
 

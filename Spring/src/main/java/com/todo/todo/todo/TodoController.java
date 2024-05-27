@@ -50,7 +50,7 @@ public class TodoController {
     @GetMapping() // annotation to handle get requests
     public ResponseEntity<List<Todo>> findAllTodos() {
         List<Todo> allTodos = this.todoService.findAllTodos();
-        logger.info("Responding with a list of todo tasks: " + allTodos);
+        logger.info("Responding with a list of todo tasks");
         return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
