@@ -16,7 +16,7 @@ const AddTodoPage = () => {
     task: "Add a task",
     dueDate: new Date().toISOString().split("T")[0], // get YYYY-MM-DD format for the date picker
     isComplete: false,
-    colourId: "2",
+    colourId: "",
   };
 
   // indicates the shape of the form data

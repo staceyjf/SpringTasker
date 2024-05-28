@@ -20,8 +20,6 @@ const TodoIndex = () => {
   const [todoId, setTodoId] = useState<number | undefined>(undefined);
   const navigate = useNavigate();
 
-  console.log(todos);
-
   // get all todos
   useEffect(() => {
     getAllTodos()

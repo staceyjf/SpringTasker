@@ -34,6 +34,8 @@ const TodoForm = ({
 }: TodoFormProps) => {
   const { colours } = useContext(ColoursContext);
 
+  console.log(colours);
+
   return (
     <form onSubmit={handleFormSubmit}>
       <Box display="flex" flexDirection="column">
@@ -50,6 +52,7 @@ const TodoForm = ({
                 multiline
                 variant="standard"
                 fullWidth
+                onClick={() => field.onChange("")}
               />
             )}
           />
@@ -71,6 +74,7 @@ const TodoForm = ({
                 multiline
                 variant="standard"
                 fullWidth
+                onClick={() => field.onChange("")}
               />
             )}
           />
@@ -80,7 +84,7 @@ const TodoForm = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="dueDate">Due date</FormLabel>
+          <FormLabel>Due date</FormLabel>
 
           {/* TASK: reduce text size */}
           <DatePicker defaultValue={dayjs(defaultValues.dueDate)} />
@@ -116,7 +120,7 @@ const TodoForm = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="colourInput">Colour categorization</FormLabel>
+          <FormLabel>Colour categorization</FormLabel>
           <Controller
             name="colourId"
             control={control}
@@ -127,8 +131,8 @@ const TodoForm = ({
                 value={field.value}
                 onChange={field.onChange}
               >
-                {colours.map((colour) => (
-                  <MenuItem key={colour.id} value={colour.id}>
+                {colours.map((colour, index) => (
+                  <MenuItem key={index} value={colour.id}>
                     {colour.name}
                   </MenuItem>
                 ))}
