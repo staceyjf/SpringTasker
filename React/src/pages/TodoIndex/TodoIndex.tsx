@@ -4,6 +4,7 @@ import {
   getAllTodos,
   deleteTodoById,
   updateTodoById,
+  updateStatusById,
 } from "../../services/todo-services";
 import { TodoResponse } from "../../services/api-responses.interfaces";
 
@@ -11,7 +12,6 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import StatusMessageBox from "../../components/StatusMessageBox/StatusMessageBox";
 import TodoCard from "../../components/TodoCard/TodoCard";
 import DeleteConfirmationModel from "../../components/DeleteConfirmationModal/DeleteConfirmationModel";
-import { TodoFormData } from "../../components/TodoForm/TodoSchema";
 
 const TodoIndex = () => {
   const [todos, setTodos] = useState<TodoResponse[]>([]);
@@ -87,7 +87,7 @@ const TodoIndex = () => {
     }
 
     try {
-      await updateTodoById(id, isComplete);
+      await updateStatusById(id, isComplete);
       setTodos(await getAllTodos()); //update all todos
     } catch (e: any) {
       setError(e);
@@ -112,6 +112,7 @@ const TodoIndex = () => {
               id={todo.id}
               createdAt={todo.createdAt}
               dueDate={todo.dueDate}
+              isComplete={todo.isComplete}
               title={todo.title}
               task={todo.task}
               colourHexCode={todo.colour.hexCode}

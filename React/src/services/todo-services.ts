@@ -75,6 +75,25 @@ export const updateTodoById = async (
   return await response.json();
 };
 
+export const updateStatusById = async (
+  id: number,
+  isCompleteUpdated: boolean
+) => {
+  const response = await fetch(`${baseUrl}/todos/${id}/status`, {
+    method: "PATCH",
+    body: JSON.stringify({ isComplete: isCompleteUpdated }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    console.warn(response.status);
+    throw new Error(
+      `Oops, something went wrong while trying to update Todo's status with id: ${id}. Please try again.`
+    );
+  }
+};
+
 export const deleteTodoById = async (id: number) => {
   const response = await fetch(`${baseUrl}/todos/${id}`, {
     method: "DELETE",

@@ -7,19 +7,21 @@ import {
   IconButton,
   useTheme,
   Divider,
+  Switch,
 } from "@mui/material";
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   CheckCircle as CheckCircleIcon,
 } from "@mui/icons-material";
-import { TodoFormData } from "../TodoForm/TodoSchema";
+import { boolean } from "zod";
 
 // define the props
 interface TodoCardProps {
   id: number | undefined;
   createdAt: string;
   dueDate?: string;
+  isComplete: boolean;
   title: string;
   task: string;
   colourHexCode?: string; // optional
@@ -32,6 +34,7 @@ const TodoCard = ({
   id,
   createdAt,
   dueDate,
+  isComplete,
   title,
   task,
   colourHexCode,
@@ -127,7 +130,7 @@ const TodoCard = ({
             >
               <DeleteIcon fontSize="small" />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               aria-label="mark as done"
               color="secondary"
               sx={{
@@ -139,7 +142,16 @@ const TodoCard = ({
               onClick={() => alert("fix me")}
             >
               <CheckCircleIcon fontSize="small" />
-            </IconButton>
+            </IconButton> */}
+            <Switch
+              id="isComplete"
+              checked={isComplete}
+              onChange={() => handleIsComplete(id, !isComplete)}
+              disableRipple
+              defaultChecked
+              color="default"
+              size="small"
+            />
           </Box>
         </CardActions>
       </Box>
