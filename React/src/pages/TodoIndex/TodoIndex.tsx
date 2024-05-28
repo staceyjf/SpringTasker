@@ -11,6 +11,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import StatusMessageBox from "../../components/StatusMessageBox/StatusMessageBox";
 import TodoCard from "../../components/TodoCard/TodoCard";
 import DeleteConfirmationModel from "../../components/DeleteConfirmationModal/DeleteConfirmationModel";
+import { TodoFormData } from "../../components/TodoForm/TodoSchema";
 
 const TodoIndex = () => {
   const [todos, setTodos] = useState<TodoResponse[]>([]);
@@ -22,17 +23,20 @@ const TodoIndex = () => {
 
   // get all todos
   useEffect(() => {
-    getAllTodos()
-      .then((data) => {
-        setFetchStatus("SUCCESS");
-        setTodos(data);
-      })
-      .catch((e: Error) => {
-        setError(e);
-        setFetchStatus("FAILED");
-        console.error(e);
-      });
+    fetchAllTodos();
   }, []);
+
+  const fetchAllTodos = async () => {
+    try {
+      const allTodos = await getAllTodos();
+      setFetchStatus("SUCCESS");
+      setTodos(allTodos);
+    } catch (e: any) {
+      setError(e);
+      setFetchStatus("FAILED");
+      console.error(e);
+    }
+  };
 
   const handleTodoDelete = async (id: number | undefined) => {
     try {
@@ -72,21 +76,24 @@ const TodoIndex = () => {
     }
   };
 
-  // const handleIsComplete = async (id: number | undefined, data: TodoResponse) => {
-  //   try {
-  //     if (id !== undefined) {
-  //       await updateTodoById(id, data);
-  //       setTodos
-  //     } else {
-  //       console.error("Id is undefined for deleting a todo by id");
-  //       throw new Error(`Unable to delete todo with id: ${id}`);
-  //       // TASK: Add some user UX for issues
-  //     }
-  //   } catch (e: any) {
-  //     setError(e);
-  //     console.error(e);
-  //   }
-  // };
+  const handleIsComplete = async (
+    id: number | undefined,
+    isComplete: boolean
+  ) => {
+    if (id === undefined) {
+      console.error("Id is undefined for updating task status");
+      throw new Error(`Unable to update todo status with id: ${id}`);
+      // TASK: Add some user UX for issues
+    }
+
+    try {
+      await updateTodoById(id, isComplete);
+      setTodos(await getAllTodos()); //update all todos
+    } catch (e: any) {
+      setError(e);
+      console.error(e);
+    }
+  };
 
   return (
     <section style={{ width: "80%" }}>
@@ -107,10 +114,10 @@ const TodoIndex = () => {
               dueDate={todo.dueDate}
               title={todo.title}
               task={todo.task}
-              isComplete={todo.isComplete}
               colourHexCode={todo.colour.hexCode}
               deleteOnClick={deleteTodoOnClick}
               handleEdit={handleTodoEdit}
+              handleIsComplete={handleIsComplete}
             />
           ))}
         </>

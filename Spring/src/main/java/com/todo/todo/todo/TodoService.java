@@ -63,6 +63,8 @@ public class TodoService {
     public Optional<Todo> updateById(Long id, UpdateTodoDTO data) throws ServiceValidationException {
         // find the task
         Optional<Todo> maybeTodo = this.findById(id);
+
+        // if you can't find it, an not found by ID exception will be thrown
         if (maybeTodo.isEmpty()) {
             return maybeTodo;
         }
@@ -82,6 +84,20 @@ public class TodoService {
         if (errors.hasErrors()) {
             throw new ServiceValidationException(errors);
         }
+
+        mapper.map(data, foundTodo);
+        Todo updatedTodo = this.repo.save(foundTodo);
+        return Optional.of(updatedTodo);
+    }
+    
+    public Optional<Todo> updateStatusById(Long id, StatusTodoDTO data)  {
+        // if you can't find it, an not found by ID exception will be thrown
+        Optional<Todo> maybeTodo = this.findById(id);
+        if (maybeTodo.isEmpty()) {
+            return maybeTodo;
+        }
+
+        Todo foundTodo = maybeTodo.get();
 
         mapper.map(data, foundTodo);
         Todo updatedTodo = this.repo.save(foundTodo);

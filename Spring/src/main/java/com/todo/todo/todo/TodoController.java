@@ -75,6 +75,18 @@ public class TodoController {
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 
+    @Tag(name = "PATCH", description = "PATCH methods of todo API")
+    @Operation(summary = "Update a todo's status by Id", description = "Edit an existing todo task's isComplete status by id. The response is a Todo object with title, task description, date created, due date and isComplete.")
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Todo> updateTodoStatusById(@PathVariable Long id, @Valid @RequestBody StatusTodoDTO data)
+            throws NotFoundByIdException, ServiceValidationException {
+        Optional<Todo> maybeTodo = this.todoService.updateStatusById(id, data);
+        Todo updatedTodo = maybeTodo.orElseThrow(() -> new NotFoundByIdException(Todo.class, id));
+        logger.info("Responding with updated todo with updated status: " + updatedTodo);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+    }
+
+
     @Tag(name = "DELETE", description = "DELETE methods of todo API")
     @Operation(summary = "Delete a todo task by Id", description = "Delete an existing todo task by id.")
     @DeleteMapping("/{id}")

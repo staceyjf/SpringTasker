@@ -13,6 +13,7 @@ import {
   Edit as EditIcon,
   CheckCircle as CheckCircleIcon,
 } from "@mui/icons-material";
+import { TodoFormData } from "../TodoForm/TodoSchema";
 
 // define the props
 interface TodoCardProps {
@@ -21,10 +22,10 @@ interface TodoCardProps {
   dueDate?: string;
   title: string;
   task: string;
-  isComplete: boolean;
   colourHexCode?: string; // optional
   deleteOnClick: (id: number | undefined) => void;
   handleEdit: (id: number | undefined) => void;
+  handleIsComplete: (id: number | undefined, isComplete: boolean) => void;
 }
 
 const TodoCard = ({
@@ -33,10 +34,10 @@ const TodoCard = ({
   dueDate,
   title,
   task,
-  isComplete,
   colourHexCode,
   deleteOnClick,
   handleEdit,
+  handleIsComplete,
 }: TodoCardProps) => {
   const theme = useTheme();
 
