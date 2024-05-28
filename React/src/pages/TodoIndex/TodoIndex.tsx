@@ -103,9 +103,7 @@ const TodoIndex = () => {
       )}
       {fetchStatus === "SUCCESS" && (
         <>
-          <h1 style={{ margin: "0 0 0.5rem 0", fontSize: "2em" }}>
-            CURRENT TODOS
-          </h1>
+          <h1 style={{ margin: "0 0 0.5rem 0", fontSize: "2em" }}>MY TODOS</h1>
           {todos.map((todo: TodoResponse) => (
             <TodoCard
               key={todo.id}

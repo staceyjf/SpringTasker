@@ -141,7 +141,7 @@ const TodoCard = ({
               <DeleteIcon fontSize="small" />
             </IconButton>
             <Switch
-              id={id}
+              id={id?.toString()}
               checked={isComplete}
               onChange={() => handleIsComplete(id, !isComplete)}
               disableRipple
