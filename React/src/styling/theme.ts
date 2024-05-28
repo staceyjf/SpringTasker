@@ -24,7 +24,7 @@ let theme = createTheme({
     main: "#EF476F",
   },
   typography: {
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: [
       "Inter",
       "-apple-system",

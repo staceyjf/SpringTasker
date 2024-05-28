@@ -6,7 +6,7 @@ import { getTodoById, updateTodoById } from "../../services/todo-services";
 import { schema } from "../../components/TodoForm/TodoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TodoForm from "../../components/TodoForm/TodoForm";
-import { Box } from "@mui/material";
+import { Alert, Backdrop, Box, Skeleton, Snackbar } from "@mui/material";
 
 const UpdateTodoPage = () => {
   const navigate = useNavigate();
@@ -70,17 +70,46 @@ const UpdateTodoPage = () => {
 
   return (
     <Box width="100%">
-      <h2>Edit `{defaultValues?.title}` Todo</h2>
-      {/* TASK: Fix this to error message component */}
-      {error && <p>Error: {error.message}</p>}
-      {defaultValues && (
-        <TodoForm
-          handleFormSubmit={handleSubmit(onSubmit)}
-          errors={errors}
-          control={control}
-          defaultValues={defaultValues}
-          mode="Edit"
-        />
+      {fetchStatus === "LOADING" && (
+        <>
+          <Box
+            display="flex"
+            flexDirection="column"
+            rowGap="0.5rem"
+            justifyContent="center"
+          >
+            <Skeleton />
+            <Skeleton width="60%" />
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+          </Box>
+        </>
+      )}
+      {fetchStatus === "FAILED" && (
+        <Backdrop open={true} sx={{ color: "#fff", zIndex: 1 }}>
+          <Snackbar open={true} autoHideDuration={3000}>
+            <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+              {error?.message}
+            </Alert>
+          </Snackbar>
+        </Backdrop>
+      )}
+      {fetchStatus === "SUCCESS" && (
+        <>
+          <h2>Edit `{defaultValues?.title}` Todo</h2>
+          {/* TASK: Fix this to error message component */}
+          {error && <p>Error: {error.message}</p>}
+          {defaultValues && (
+            <TodoForm
+              handleFormSubmit={handleSubmit(onSubmit)}
+              errors={errors}
+              control={control}
+              defaultValues={defaultValues}
+              mode="Edit"
+            />
+          )}
+        </>
       )}
     </Box>
   );

@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import {
   getAllTodos,
   deleteTodoById,
-  updateTodoById,
   updateStatusById,
 } from "../../services/todo-services";
 import { TodoResponse } from "../../services/api-responses.interfaces";
 
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import StatusMessageBox from "../../components/StatusMessageBox/StatusMessageBox";
 import TodoCard from "../../components/TodoCard/TodoCard";
 import DeleteConfirmationModel from "../../components/DeleteConfirmationModal/DeleteConfirmationModel";
+import { Alert, Backdrop, Box, Skeleton, Snackbar } from "@mui/material";
 
 const TodoIndex = () => {
   const [todos, setTodos] = useState<TodoResponse[]>([]);
@@ -47,7 +45,6 @@ const TodoIndex = () => {
       } else {
         console.error("Id is undefined for deleting a todo by id");
         throw new Error(`Unable to delete todo with id: ${id}`);
-        // TASK: Add some user UX for issues
       }
     } catch (e: any) {
       setError(e);
@@ -62,7 +59,6 @@ const TodoIndex = () => {
     } else {
       console.error("Id is undefined for deleting a todo by id");
       throw new Error(`Unable to find todo with: ${id}`);
-      // TASK: Add some user UX for issues
     }
   };
 
@@ -72,7 +68,6 @@ const TodoIndex = () => {
     } else {
       console.error("Id is undefined for updating a todo by id");
       throw new Error(`Unable to update todo with id: ${id}`);
-      // TASK: Add some user UX for issues
     }
   };
 
@@ -83,7 +78,6 @@ const TodoIndex = () => {
     if (id === undefined) {
       console.error("Id is undefined for updating task status");
       throw new Error(`Unable to update todo status with id: ${id}`);
-      // TASK: Add some user UX for issues
     }
 
     try {
@@ -97,9 +91,30 @@ const TodoIndex = () => {
 
   return (
     <section style={{ width: "80%" }}>
-      {fetchStatus === "LOADING" && <LoadingSpinner />}
+      {fetchStatus === "LOADING" && (
+        <>
+          <Box
+            display="flex"
+            flexDirection="column"
+            rowGap="0.5rem"
+            justifyContent="center"
+          >
+            <Skeleton />
+            <Skeleton width="60%" />
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+            <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
+          </Box>
+        </>
+      )}
       {fetchStatus === "FAILED" && (
-        <StatusMessageBox severity="error" message={error?.message} />
+        <Backdrop open={true} sx={{ color: "#fff", zIndex: 1 }}>
+          <Snackbar open={true} autoHideDuration={3000}>
+            <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+              {error?.message}
+            </Alert>
+          </Snackbar>
+        </Backdrop>
       )}
       {fetchStatus === "SUCCESS" && (
         <>
