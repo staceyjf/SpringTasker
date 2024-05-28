@@ -91,14 +91,16 @@ const TodoIndex = () => {
   // };
 
   return (
-    <section style={{ width: "100%" }}>
+    <section style={{ width: "80%" }}>
       {fetchStatus === "LOADING" && <LoadingSpinner />}
       {fetchStatus === "FAILED" && (
         <StatusMessageBox severity="error" message={error?.message} />
       )}
       {fetchStatus === "SUCCESS" && (
         <>
-          <h3>CURRENT TODOS</h3>
+          <h1 style={{ margin: "0 0 0.5rem 0", fontSize: "2em" }}>
+            CURRENT TODOS
+          </h1>
           {todos.map((todo: TodoResponse) => (
             <TodoCard
               key={todo.id}

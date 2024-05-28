@@ -1,59 +1,139 @@
-import { UseFormRegister, FieldErrors, useForm } from "react-hook-form";
+import { FieldErrors, Controller, Control } from "react-hook-form";
 import { useContext } from "react";
 import { ColoursContext } from "../../context/ColourContextProvider";
 import { TodoFormData } from "./TodoSchema";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import {
+  Button,
+  Checkbox,
+  MenuItem,
+  Select,
+  TextField,
+  Box,
+  FormLabel,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 interface TodoFormProps {
   handleFormSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   errors: FieldErrors<TodoFormData>;
-  register: UseFormRegister<TodoFormData>;
+  control: Control<TodoFormData>;
+  defaultValues: TodoFormData;
   mode: string;
 }
 
 const TodoForm = ({
   handleFormSubmit,
   errors,
-  register,
+  control,
+  defaultValues,
   mode,
 }: TodoFormProps) => {
   const { colours } = useContext(ColoursContext);
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div>
-        <label htmlFor="titleInput">Title</label>
-        <input id="titleInput" type="text" {...register("title")} />
-        <small>{errors?.title?.message ?? "\u00A0"}</small>
-      </div>
-      <div>
-        <label htmlFor="taskInput">Task details</label>
-        <textarea id="taskInput" {...register("task")}></textarea>
-        <small>{errors?.task?.message ?? "\u00A0"}</small>
-      </div>
-      <div>
-        <label htmlFor="dueDate">Due date</label>
-        <input id="dueDate" type="date" {...register("dueDate")} />
-        <small>{errors?.dueDate?.message ?? "\u00A0"}</small>
-      </div>
-      <div>
-        <label htmlFor="isComplete">Task complete</label>
-        <input id="isComplete" type="checkbox" {...register("isComplete")} />
-        <small>{errors?.isComplete?.message ?? "\u00A0"}</small>
-      </div>
-      <div>
-        <div>
-          <label htmlFor="colourInput">Colour categorization</label>
-          <select id="colourInput" {...register("colourId")}>
-            {colours.map((colour) => (
-              <option key={colour.id} value={colour.id}>
-                {colour.name}
-              </option>
-            ))}
-          </select>
-          <small>{errors?.colourId?.message ?? "\u00A0"}</small>
-        </div>
-        <button type="submit">{mode} Todo</button>
-      </div>
+      <Box display="flex" flexDirection="column">
+        <FormControl>
+          <FormLabel htmlFor="titleInput">Title</FormLabel>
+          <Controller
+            name="title"
+            control={control}
+            defaultValue={defaultValues.title}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="titleInput"
+                multiline
+                variant="standard"
+                fullWidth
+              />
+            )}
+          />
+          <FormHelperText error>
+            {errors?.title?.message ?? "\u00A0"}
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl>
+          <FormLabel htmlFor="taskInput">Task details</FormLabel>
+          <Controller
+            name="task"
+            control={control}
+            defaultValue={defaultValues.task}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="taskInput"
+                multiline
+                variant="standard"
+                fullWidth
+              />
+            )}
+          />
+          <FormHelperText error>
+            {errors?.task?.message ?? "\u00A0"}
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl>
+          <FormLabel htmlFor="dueDate">Due date</FormLabel>
+
+          <DatePicker defaultValue={dayjs(defaultValues.dueDate)} />
+
+          <FormHelperText error>
+            {errors?.dueDate?.message ?? "\u00A0"}
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl>
+          <FormLabel htmlFor="isComplete">Task complete</FormLabel>
+          <Controller
+            name="isComplete"
+            control={control}
+            defaultValue={defaultValues.isComplete}
+            render={({ field }) => (
+              <Checkbox
+                id="isComplete"
+                checked={field.value}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            )}
+          />
+          <FormHelperText error>
+            {errors?.isComplete?.message ?? "\u00A0"}
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl>
+          <FormLabel htmlFor="colourInput">Colour categorization</FormLabel>
+          <Controller
+            name="colourId"
+            control={control}
+            defaultValue={defaultValues.colourId}
+            render={({ field }) => (
+              <Select
+                id="colourInput"
+                value={field.value}
+                onChange={field.onChange}
+              >
+                {colours.map((colour) => (
+                  <MenuItem key={colour.id} value={colour.id}>
+                    {colour.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+          <FormHelperText error>
+            {errors?.colourId?.message ?? "\u00A0"}
+          </FormHelperText>
+        </FormControl>
+
+        <Button type="submit">{mode} Todo</Button>
+      </Box>
     </form>
   );
 };

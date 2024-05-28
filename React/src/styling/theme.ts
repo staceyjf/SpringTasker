@@ -24,6 +24,7 @@ let theme = createTheme({
     main: "#EF476F",
   },
   typography: {
+    fontSize: 10,
     fontFamily: [
       "Inter",
       "-apple-system",
@@ -37,9 +38,51 @@ let theme = createTheme({
       '"Segoe UI Symbol"',
     ].join(","),
   },
+  components: {
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.75rem",
+          fontWeight: 400,
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          fontWeight: 500,
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.875rem",
+          fontWeight: 400,
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          fontWeight: 500,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          fontWeight: 500,
+        },
+      },
+    },
+  },
 });
 
-// adjust based on the predefined breakpoints
+// adjusted based on the predefined breakpoints
 theme = responsiveFontSizes(theme);
 
 export default theme;

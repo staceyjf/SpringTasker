@@ -42,8 +42,6 @@ const TodoCard = ({
 
   const colourCatergorisation = colourHexCode;
 
-  console.log(colourHexCode);
-
   return (
     <Card
       sx={{

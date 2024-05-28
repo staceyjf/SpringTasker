@@ -6,6 +6,7 @@ import { getTodoById, updateTodoById } from "../../services/todo-services";
 import { schema } from "../../components/TodoForm/TodoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TodoForm from "../../components/TodoForm/TodoForm";
+import { Box } from "@mui/material";
 
 const UpdateTodoPage = () => {
   const navigate = useNavigate();
@@ -40,12 +41,11 @@ const UpdateTodoPage = () => {
 
   // indicates the shape of the form data
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<TodoFormData>({
-    defaultValues: defaultValues,
     resolver: zodResolver(schema),
   });
 
@@ -69,17 +69,20 @@ const UpdateTodoPage = () => {
   };
 
   return (
-    <div>
-      <h1>Edit {defaultValues?.title}</h1>
+    <Box width="100%">
+      <h2>Edit `{defaultValues?.title}` Todo</h2>
       {/* TASK: Fix this to error message component */}
       {error && <p>Error: {error.message}</p>}
-      <TodoForm
-        handleFormSubmit={handleSubmit(onSubmit)}
-        errors={errors}
-        register={register}
-        mode="Edit"
-      />
-    </div>
+      {defaultValues && (
+        <TodoForm
+          handleFormSubmit={handleSubmit(onSubmit)}
+          errors={errors}
+          control={control}
+          defaultValues={defaultValues}
+          mode="Edit"
+        />
+      )}
+    </Box>
   );
 };
 

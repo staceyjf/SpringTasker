@@ -18,11 +18,7 @@ const Header = () => {
         px={3}
       >
         <NavLink to="/todo">
-          <img
-            src={logo}
-            alt="Spring Tasker Logo"
-            style={{ width: 175, height: 125 }}
-          />
+          <img src={logo} alt="Spring Tasker Logo" />
         </NavLink>
         <NavLink to="/todo/add">
           <AddCircleIcon

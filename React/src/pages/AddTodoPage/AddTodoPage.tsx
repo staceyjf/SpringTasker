@@ -21,7 +21,7 @@ const AddTodoPage = () => {
 
   // indicates the shape of the form data
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -41,14 +41,15 @@ const AddTodoPage = () => {
   };
 
   return (
-    <div>
-      <h1>Create a new Todo task</h1>
+    <div style={{ width: "80%" }}>
+      <h1 style={{ margin: "0 0 0.5rem 0" }}>Create a new Todo task</h1>
       {/* TASK: Fix this to error message component */}
       {error && <p>Error: {error.message}</p>}
       <TodoForm
         handleFormSubmit={handleSubmit(onSubmit)}
         errors={errors}
-        register={register}
+        control={control}
+        defaultValues={defaultValues}
         mode="Create"
       />
     </div>
