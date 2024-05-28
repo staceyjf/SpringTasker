@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
@@ -7,5 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["vite.config.ts"]
+  "include": ["**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts", "dist"]
 }
