@@ -50,7 +50,7 @@ let theme = createTheme({
     MuiInput: {
       styleOverrides: {
         root: {
-          fontSize: "1rem",
+          fontSize: "0.8rem",
           fontWeight: 500,
         },
       },
@@ -58,7 +58,7 @@ let theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          fontSize: "0.875rem",
+          fontSize: "0.8rem",
           fontWeight: 400,
         },
       },
@@ -66,7 +66,7 @@ let theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         root: {
-          fontSize: "1rem",
+          fontSize: "0.8rem",
           fontWeight: 500,
         },
       },

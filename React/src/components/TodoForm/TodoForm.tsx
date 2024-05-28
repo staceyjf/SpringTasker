@@ -6,12 +6,13 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import {
   Button,
-  Checkbox,
+  Switch,
   MenuItem,
   Select,
   TextField,
   Box,
   FormLabel,
+  FormControlLabel,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
@@ -81,6 +82,7 @@ const TodoForm = ({
         <FormControl>
           <FormLabel htmlFor="dueDate">Due date</FormLabel>
 
+          {/* TASK: reduce text size */}
           <DatePicker defaultValue={dayjs(defaultValues.dueDate)} />
 
           <FormHelperText error>
@@ -89,16 +91,22 @@ const TodoForm = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="isComplete">Task complete</FormLabel>
+          <FormLabel htmlFor="isComplete">Task Status</FormLabel>
           <Controller
             name="isComplete"
             control={control}
             defaultValue={defaultValues.isComplete}
             render={({ field }) => (
-              <Checkbox
-                id="isComplete"
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
+              <FormControlLabel
+                control={
+                  <Switch
+                    id="isComplete"
+                    checked={field.value}
+                    onChange={(e) => field.onChange(e.target.checked)}
+                    disableRipple
+                  />
+                }
+                label="Task Completed"
               />
             )}
           />

@@ -16,7 +16,7 @@ import Header from "./components/Header/Header";
 function App() {
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="EN-GB">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <ThemeProvider theme={theme}>
           {/* Normalization add  */}
           <CssBaseline />
