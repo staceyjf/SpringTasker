@@ -75,13 +75,18 @@ const TodoCard = ({
             sx={{
               color: theme.palette.common.white,
               textTransform: "uppercase",
+              textDecoration: isComplete ? "line-through" : "none",
             }}
           >
             {title}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: theme.palette.common.white, display: "block" }}
+            sx={{
+              color: theme.palette.common.white,
+              display: "block",
+              textDecoration: isComplete ? "line-through" : "none",
+            }}
           >
             {task}
           </Typography>
@@ -91,13 +96,18 @@ const TodoCard = ({
               color: theme.palette.common.white,
               display: "block",
               marginBottom: "-3px",
+              textDecoration: isComplete ? "line-through" : "none",
             }}
           >
             Created on {createdAt}
           </Typography>
           <Typography
             variant="caption"
-            sx={{ color: theme.palette.common.white, display: "block" }}
+            sx={{
+              color: theme.palette.common.white,
+              display: "block",
+              textDecoration: isComplete ? "line-through" : "none",
+            }}
           >
             Due by {dueDate}
           </Typography>
@@ -130,25 +140,11 @@ const TodoCard = ({
             >
               <DeleteIcon fontSize="small" />
             </IconButton>
-            {/* <IconButton
-              aria-label="mark as done"
-              color="secondary"
-              sx={{
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.light,
-                },
-              }}
-              size="small"
-              onClick={() => alert("fix me")}
-            >
-              <CheckCircleIcon fontSize="small" />
-            </IconButton> */}
             <Switch
-              id="isComplete"
+              id={id}
               checked={isComplete}
               onChange={() => handleIsComplete(id, !isComplete)}
               disableRipple
-              defaultChecked
               color="default"
               size="small"
             />
