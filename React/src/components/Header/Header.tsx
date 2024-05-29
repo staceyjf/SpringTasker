@@ -22,6 +22,7 @@ const Header = () => {
         </NavLink>
         <NavLink to="/todo/add">
           <AddCircleIcon
+            aria-label="Add a todo"
             style={{ fontSize: 40, color: theme.highlightOne.main }}
           />
         </NavLink>
