@@ -11,7 +11,7 @@ export const schema = z.object({
     .string()
     .min(1)
     .max(200, "Task should be smaller than 200 characters"),
-  dueDate: z.string().optional(),
+  dueDate: z.date().optional(),
   isComplete: z.boolean().optional(),
   colourId: z.string().or(z.number()),
 });

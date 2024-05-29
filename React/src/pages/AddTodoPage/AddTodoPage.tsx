@@ -6,6 +6,7 @@ import { createTodo } from "../../services/todo-services";
 import { schema } from "../../components/TodoForm/TodoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TodoForm from "../../components/TodoForm/TodoForm";
+import dayjs from "dayjs";
 
 const AddTodoPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const AddTodoPage = () => {
   const defaultValues = {
     title: "Keep me short and sweet",
     task: "Add a task",
-    dueDate: new Date().toISOString().split("T")[0], // get YYYY-MM-DD format for the date picker
+    dueDate: dayjs().toDate(), // Datepicker needs a dayjs obj but RHF needs a date obj
     isComplete: false,
     colourId: "",
   };

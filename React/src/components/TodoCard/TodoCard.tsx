@@ -9,18 +9,14 @@ import {
   Divider,
   Switch,
 } from "@mui/material";
-import {
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-  CheckCircle as CheckCircleIcon,
-} from "@mui/icons-material";
-import { boolean } from "zod";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
+import dayjs from "dayjs";
 
 // define the props
 interface TodoCardProps {
   id: number | undefined;
-  createdAt: string;
-  dueDate?: string;
+  createdAt: Date;
+  dueDate?: Date;
   isComplete: boolean;
   title: string;
   task: string;
@@ -99,7 +95,7 @@ const TodoCard = ({
               textDecoration: isComplete ? "line-through" : "none",
             }}
           >
-            Created on {createdAt}
+            Created on {dayjs(createdAt).format("DD-MM-YY")}
           </Typography>
           <Typography
             variant="caption"
@@ -109,7 +105,7 @@ const TodoCard = ({
               textDecoration: isComplete ? "line-through" : "none",
             }}
           >
-            Due by {dueDate}
+            Due by {dayjs(dueDate).format("DD-MM-YY")}
           </Typography>
         </CardContent>
         <CardActions>

@@ -12,6 +12,7 @@ import UpdateTodoPage from "./pages/UpdateTodoPage/UpdateTodoPage";
 import "./App.scss";
 import { Container, Box } from "@mui/material";
 import Header from "./components/Header/Header";
+import AddColourPage from "./pages/AddColourPage/AddColourPage";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
                         path="/todo/edit/:id"
                         element={<UpdateTodoPage />}
                       />
+                      <Route path="/colours/add" element={<AddColourPage />} />
                     </Routes>
                   </Box>
                 </BrowserRouter>

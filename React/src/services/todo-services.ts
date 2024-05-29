@@ -9,20 +9,6 @@ export const getAllTodos = async (): Promise<TodoResponse[]> => {
     throw new Error("Failed to fetch all Todos. Please try again later");
   }
 
-  // const data = await response.json();
-
-  // const formattedDateTodo = data.map((todo: TodoResponse) => {
-  //   return {
-  //     ...todo,
-  //     createdAt: new Date(todo.dueDate).toLocaleDateString("en-GB", {
-  //       dateStyle: "short",
-  //     }),
-  //     dueDate: new Date(todo.dueDate).toLocaleDateString("en-GB", {
-  //       dateStyle: "short",
-  //     }),
-  //   };
-  // });
-
   return await response.json();
 };
 

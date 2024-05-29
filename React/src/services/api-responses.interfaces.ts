@@ -8,8 +8,8 @@ export interface ColourResponse {
 
 export interface TodoResponse {
   id: number;
-  createdAt: string;
-  dueDate: string;
+  createdAt: Date;
+  dueDate: Date;
   title: string;
   task: string;
   isComplete: boolean;
