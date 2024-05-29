@@ -1,27 +1,110 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import TodoCard from "./TodoCard";
 
 describe("TodoCard", () => {
+  const deleteOnClick = vi.fn((id) => console.log(id));
+  const handleEdit = vi.fn((id) => console.log(id));
+  const isCompleteMock = vi.fn((id, isComplete) => console.log(id, isComplete));
+
   beforeEach(() => {
     render(
       <TodoCard
-        id={1}
+        id={5}
         createdAt={new Date("2024-05-21")}
         dueDate={new Date("2024-05-22")}
-        title="My test header"
+        title="My test heading"
         task="My test paragraph with lots and lots of words."
-        isComplete={false}
-        colour={{
-          id: 1,
-          createdAt: new Date("2024-05-20").toISOString(),
-          name: "red",
-          hexCode: "#ff0000",
-          todos: [],
-        }}
+        colourHexCode="#ff0000"
+        deleteOnClick={deleteOnClick}
+        handleEdit={handleEdit}
+        handleIsComplete={isCompleteMock}
       />
     );
+  });
 
-    it("should check ");
+  // -----------Todo header-----------
+  it("should render a card title based on props", () => {
+    const headingElement = screen.getByText(/My test heading/i);
+    expect(headingElement).toBeInTheDocument();
+  });
+
+  // -----------Todo contents-----------
+  it("should render a created at, due date and task details card based on props", () => {
+    const createdDateElement = screen.getByText(/21-05-24/i);
+    const dueDateElement = screen.getByText(/22-05-24/i);
+    const taskElement = screen.getByText(/My test paragraph with/i);
+
+    expect(createdDateElement).toBeInTheDocument();
+    expect(dueDateElement).toBeInTheDocument();
+    expect(taskElement).toBeInTheDocument();
+  });
+
+  // -----------hexCode line-----------
+  it("should use the hex colour of the colour response object to set the colour of the divider", () => {
+    let divider = screen.getByTestId("divider");
+    expect(divider.getAttribute("data-divider-colour")).toEqual("#ff0000");
+  });
+
+  // -----------Switch / Checkbox-----------
+  it("should default the isComplete switch to false when no value is provided", () => {
+    const switchElement = screen.getByRole("checkbox");
+    expect(switchElement).not.toBeChecked();
+  });
+
+  it("should toggle the switch when it is clicked", async () => {
+    const switchElement = screen.getByRole("checkbox");
+    expect(switchElement).not.toBeChecked();
+    await userEvent.click(switchElement);
+    expect(switchElement).toBeChecked();
+    await userEvent.click(switchElement);
+    expect(switchElement).not.toBeChecked();
+  });
+
+  // it("should cross out task when the switch is toggled to true", async () => {
+  //   let todoStatus = screen.getByTestId("todo-status");
+  //   let switchElement = screen.getByRole("checkbox");
+
+  //   expect(switchElement).not.toBeChecked();
+  //   expect(todoStatus.getAttribute("data-completed")).toEqual("not-crossed");
+
+  //   await userEvent.click(switchElement);
+
+  //   // re-render with the new todo
+  //   render(
+  //     <TodoCard
+  //       task="My test paragraph with lots and lots of words."
+  //       isComplete={true}
+  //       handleIsComplete={isCompleteMock}
+  //     />
+  //   );
+
+  //   // Re-query for the switch element and todoStatus
+  //   switchElement = screen.getByRole("checkbox");
+  //   todoStatus = screen.getByTestId("todo-status");
+
+  //   expect(switchElement).toBeChecked();
+  //   expect(todoStatus.getAttribute("data-completed")).toEqual("crossed-out");
+  // });
+
+  //-----------on click - delete & edit-----------
+  it("should call deleteOnClick with the right id value, multiple times", async () => {
+    const btn = screen.getByLabelText("delete");
+    await userEvent.click(btn);
+    expect(deleteOnClick).toHaveBeenCalledTimes(1);
+    await userEvent.click(btn);
+    expect(deleteOnClick).toHaveBeenCalledTimes(2);
+    expect(deleteOnClick).toHaveBeenNthCalledWith(1, 5);
+    expect(deleteOnClick).toHaveBeenNthCalledWith(2, 5);
+  });
+
+  it("should call handleEdit with the right id value, multiple times", async () => {
+    const btn = screen.getByLabelText("edit");
+    await userEvent.click(btn);
+    expect(handleEdit).toHaveBeenCalledTimes(1);
+    await userEvent.click(btn);
+    expect(handleEdit).toHaveBeenCalledTimes(2);
+    expect(handleEdit).toHaveBeenNthCalledWith(1, 5);
+    expect(handleEdit).toHaveBeenNthCalledWith(2, 5);
   });
 });

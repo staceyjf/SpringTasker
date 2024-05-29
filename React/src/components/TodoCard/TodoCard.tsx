@@ -63,6 +63,8 @@ const TodoCard = ({
           orientation="vertical"
           flexItem
           sx={{ bgcolor: colourCatergorisation, width: "2px" }}
+          data-testid="divider"
+          data-divider-colour={colourCatergorisation}
         />
         <Box display="flex" flexDirection="column">
           <CardHeader
@@ -84,6 +86,8 @@ const TodoCard = ({
                 display: "block",
                 textDecoration: isComplete ? "line-through" : "none",
               }}
+              data-testid="todo-status"
+              data-completed={isComplete ? "crossed-out" : "not-crossed"}
             >
               {task}
             </Typography>
@@ -139,6 +143,7 @@ const TodoCard = ({
               <DeleteIcon fontSize="small" />
             </IconButton>
             <Switch
+              aria-label="task status"
               id={id?.toString()}
               checked={isComplete}
               onChange={() => handleIsComplete(id, !isComplete)}
