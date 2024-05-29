@@ -58,9 +58,9 @@ function App() {
                   >
                     <Routes>
                       <Route path="/todo" element={<TodoIndex />} />
-                      <Route path="/todo/add" element={<AddTodoPage />} />
+                      <Route path="/todo/new" element={<AddTodoPage />} />
                       <Route
-                        path="/todo/edit/:id"
+                        path="/todo/:id/edit"
                         element={<UpdateTodoPage />}
                       />
                       <Route path="/colours/add" element={<AddColourPage />} />

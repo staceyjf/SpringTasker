@@ -16,6 +16,8 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 interface TodoFormProps {
   handleFormSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
@@ -33,8 +35,6 @@ const TodoForm = ({
   mode,
 }: TodoFormProps) => {
   const { colours } = useContext(ColoursContext);
-
-  console.log(colours);
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -85,10 +85,22 @@ const TodoForm = ({
 
         <FormControl>
           <FormLabel>Due date</FormLabel>
-
-          {/* TASK: reduce text size */}
-          <DatePicker defaultValue={dayjs(defaultValues.dueDate)} />
-
+          <Controller
+            name="dueDate"
+            control={control}
+            defaultValue={defaultValues.dueDate}
+            render={({ field }) => (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  // slotProps={{ textField: { variant: "outlined", size: "small" } }}
+                  value={dayjs(field.value)}
+                  onChange={(date) => {
+                    field.onChange(dayjs(date).format("YYYY-MM-DD"));
+                  }}
+                />
+              </LocalizationProvider>
+            )}
+          />
           <FormHelperText error>
             {errors?.dueDate?.message ?? "\u00A0"}
           </FormHelperText>
@@ -128,11 +140,11 @@ const TodoForm = ({
             render={({ field }) => (
               <Select
                 id="colourInput"
-                value={field.value}
+                value={field.value || ""}
                 onChange={field.onChange}
               >
-                {colours.map((colour, index) => (
-                  <MenuItem key={index} value={colour.id}>
+                {colours.map((colour) => (
+                  <MenuItem key={colour.id} value={colour.id}>
                     {colour.name}
                   </MenuItem>
                 ))}

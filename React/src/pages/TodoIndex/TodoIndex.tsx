@@ -30,24 +30,24 @@ const TodoIndex = () => {
       setFetchStatus("SUCCESS");
       setTodos(allTodos);
     } catch (e: any) {
-      setError(e);
+      setError(new Error("Failed to fetch todos. Please try again."));
       setFetchStatus("FAILED");
       console.error(e);
     }
   };
 
   const handleTodoDelete = async (id: number | undefined) => {
+    if (id === undefined) {
+      console.error("Id is undefined for deleting a todo by id");
+      throw new Error(`Unable to delete todo  with id: ${id}`);
+    }
+
     try {
-      if (id !== undefined) {
-        await deleteTodoById(id);
-        setTodos(todos.filter((item) => item.id !== id));
-        setOpenModal(false);
-      } else {
-        console.error("Id is undefined for deleting a todo by id");
-        throw new Error(`Unable to delete todo with id: ${id}`);
-      }
+      await deleteTodoById(id);
+      setTodos(todos.filter((item) => item.id !== id));
+      setOpenModal(false);
     } catch (e: any) {
-      setError(e);
+      setError(new Error("Failed to delete todo. Please try again."));
       console.error(e);
     }
   };
@@ -64,7 +64,7 @@ const TodoIndex = () => {
 
   const handleTodoEdit = (id: number | undefined) => {
     if (id !== undefined) {
-      navigate(`/todo/edit/${id}`);
+      navigate(`/todo/${id}/edit`);
     } else {
       console.error("Id is undefined for updating a todo by id");
       throw new Error(`Unable to update todo with id: ${id}`);
@@ -84,7 +84,7 @@ const TodoIndex = () => {
       await updateStatusById(id, isComplete);
       setTodos(await getAllTodos()); //update all todos
     } catch (e: any) {
-      setError(e);
+      setError(new Error("Failed to update todo status. Please try again."));
       console.error(e);
     }
   };
@@ -109,8 +109,17 @@ const TodoIndex = () => {
       )}
       {fetchStatus === "FAILED" && (
         <Backdrop open={true} sx={{ color: "#fff", zIndex: 1 }}>
-          <Snackbar open={true} autoHideDuration={3000}>
-            <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+          <Snackbar
+            open={true}
+            autoHideDuration={6000}
+            onClose={() => setError(null)}
+          >
+            <Alert
+              severity="error"
+              variant="filled"
+              sx={{ width: "100%" }}
+              aria-live="assertive"
+            >
               {error?.message}
             </Alert>
           </Snackbar>

@@ -15,9 +15,9 @@ describe("Header", () => {
   // -----------Logo-----------
   it("should navigate to the homepage if the logo is clicked", async () => {
     // use <MemoryRouter> from react dom router when you want to manually control the history of a url
-    // it enables us to render header on the /todo/add page
+    // it enables us to render header on the /todo/new page
     render(
-      <MemoryRouter initialEntries={["/todo/add"]}>
+      <MemoryRouter initialEntries={["/todo/new"]}>
         <ThemeProvider theme={theme}>
           <Header />
           <LocationDisplay />
@@ -55,7 +55,7 @@ describe("Header", () => {
     const locationDisplay = await screen.findByTestId("location-display");
 
     await waitFor(() => {
-      expect(locationDisplay).toHaveTextContent("/todo/add");
+      expect(locationDisplay).toHaveTextContent("/todo/new");
     });
   });
 });

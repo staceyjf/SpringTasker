@@ -20,7 +20,7 @@ const Header = () => {
         <NavLink to="/todo">
           <img src={logo} alt="Spring Tasker Logo" />
         </NavLink>
-        <NavLink to="/todo/add">
+        <NavLink to="/todo/new">
           <AddCircleIcon
             aria-label="Add a todo"
             style={{ fontSize: 40, color: theme.highlightOne.main }}
