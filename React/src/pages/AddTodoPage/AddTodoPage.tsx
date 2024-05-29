@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import { TodoFormData } from "../../components/TodoForm/TodoSchema";
 import { createTodo } from "../../services/todo-services";
-import { schema } from "../../components/TodoForm/TodoSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import TodoForm from "../../components/TodoForm/TodoForm";
 import { Alert, Backdrop, Snackbar } from "@mui/material";
 
@@ -20,21 +19,12 @@ const AddTodoPage = () => {
     colourId: "",
   };
 
-  // indicates the shape of the form data
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<TodoFormData>({ defaultValues, resolver: zodResolver(schema) });
-
   const onSubmit: SubmitHandler<TodoFormData> = async (data) => {
     try {
       console.log(data);
       const response = await createTodo(data);
       console.log("Todo created", response);
       navigate("/todo");
-      reset(defaultValues);
       setError(null);
     } catch (e) {
       setError(new Error("Failed to submit your new todo. Please try again."));
@@ -64,10 +54,8 @@ const AddTodoPage = () => {
         </Backdrop>
       )}
       <TodoForm
-        handleFormSubmit={handleSubmit(onSubmit)}
-        errors={errors}
-        control={control}
         defaultValues={defaultValues}
+        onSubmit={onSubmit}
         mode="Create"
       />
     </div>

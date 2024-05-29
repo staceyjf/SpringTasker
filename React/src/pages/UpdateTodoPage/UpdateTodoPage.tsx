@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import { TodoFormData } from "../../components/TodoForm/TodoSchema";
 import { getTodoById, updateTodoById } from "../../services/todo-services";
-import { schema } from "../../components/TodoForm/TodoSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import TodoForm from "../../components/TodoForm/TodoForm";
 import { Alert, Backdrop, Box, Skeleton, Snackbar } from "@mui/material";
 
@@ -31,7 +30,6 @@ const UpdateTodoPage = () => {
           colourId: data.colour.id.toString(),
         };
         setDefaultValues(newDefaultValues);
-        reset(newDefaultValues);
       })
       .catch((e: Error) => {
         setError(new Error("Failed to update your todo. Please try again."));
@@ -40,16 +38,6 @@ const UpdateTodoPage = () => {
         console.error(e);
       });
   }, []);
-
-  // indicates the shape of the form data
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<TodoFormData>({
-    resolver: zodResolver(schema),
-  });
 
   const onSubmit: SubmitHandler<TodoFormData> = (data) => {
     if (isNaN(todoId)) {
@@ -60,15 +48,13 @@ const UpdateTodoPage = () => {
     updateTodoById(todoId, data)
       .then((data) => {
         navigate("/todo");
-        reset(defaultValues);
       })
       .catch((e: Error) => {
         setError(
           new Error("Failed to submit your edited todo. Please try again.")
         );
         setOpenSnackbar(true);
-        console.error();
-        e;
+        console.error(e);
       });
   };
 
@@ -125,10 +111,8 @@ const UpdateTodoPage = () => {
           )}
           {defaultValues && (
             <TodoForm
-              handleFormSubmit={handleSubmit(onSubmit)}
-              errors={errors}
-              control={control}
               defaultValues={defaultValues}
+              onSubmit={onSubmit}
               mode="Edit"
             />
           )}

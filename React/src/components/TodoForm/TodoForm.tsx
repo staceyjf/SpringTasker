@@ -1,4 +1,4 @@
-import { FieldErrors, Controller, Control } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { useContext } from "react";
 import { ColoursContext } from "../../context/ColourContextProvider";
 import { TodoFormData } from "./TodoSchema";
@@ -18,26 +18,32 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/en-gb";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schema } from "./TodoSchema";
 
 interface TodoFormProps {
-  handleFormSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
-  errors: FieldErrors<TodoFormData>;
-  control: Control<TodoFormData>;
   defaultValues: TodoFormData;
-  mode: string;
+  onSubmit: SubmitHandler<TodoFormData>;
+  mode: "Create" | "Edit";
 }
 
-const TodoForm = ({
-  handleFormSubmit,
-  errors,
-  control,
+const TodoForm: React.FC<TodoFormProps> = ({
   defaultValues,
+  onSubmit,
   mode,
-}: TodoFormProps) => {
+}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TodoFormData>({ defaultValues, resolver: zodResolver(schema) });
+
   const { colours } = useContext(ColoursContext);
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column">
         <FormControl>
           <FormLabel htmlFor="titleInput">Title</FormLabel>
@@ -90,9 +96,14 @@ const TodoForm = ({
             control={control}
             defaultValue={defaultValues.dueDate}
             render={({ field }) => (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="en-gb"
+              >
                 <DatePicker
-                  // slotProps={{ textField: { variant: "outlined", size: "small" } }}
+                  slotProps={{
+                    textField: { variant: "outlined", size: "small" },
+                  }}
                   value={dayjs(field.value)}
                   onChange={(date) => {
                     field.onChange(dayjs(date).format("YYYY-MM-DD"));
