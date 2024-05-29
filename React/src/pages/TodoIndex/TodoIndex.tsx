@@ -90,7 +90,7 @@ const TodoIndex = () => {
   };
 
   return (
-    <section style={{ width: "80%" }}>
+    <section style={{ width: "85%" }}>
       {fetchStatus === "LOADING" && (
         <>
           <Box
@@ -100,7 +100,7 @@ const TodoIndex = () => {
             justifyContent="center"
           >
             <Skeleton />
-            <Skeleton width="60%" />
+            <Skeleton width="80%" />
             <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
             <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
             <Skeleton variant="rounded" width="100%" height={60}></Skeleton>

@@ -1,6 +1,6 @@
 export interface ColourResponse {
   id: number;
-  createdAt: string;
+  createdAt: Date;
   name: string;
   hexCode: string;
   todos: TodoResponse[];

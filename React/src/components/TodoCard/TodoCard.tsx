@@ -8,6 +8,7 @@ import {
   useTheme,
   Divider,
   Switch,
+  CardHeader,
 } from "@mui/material";
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 import dayjs from "dayjs";
@@ -53,61 +54,62 @@ const TodoCard = ({
       }}
     >
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
       >
         <Divider
           orientation="vertical"
           flexItem
           sx={{ bgcolor: colourCatergorisation, width: "2px" }}
         />
-        <CardContent sx={{ flex: 1 }}>
-          <Typography
-            variant="h6"
+        <Box display="flex" flexDirection="column">
+          <CardHeader
+            title={title}
             sx={{
-              color: theme.palette.common.white,
-              textTransform: "uppercase",
-              textDecoration: isComplete ? "line-through" : "none",
+              paddingTop: "0.5em",
+              paddingBottom: 0,
             }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
+            titleTypographyProps={{
+              variant: "h6",
               color: theme.palette.common.white,
-              display: "block",
-              textDecoration: isComplete ? "line-through" : "none",
             }}
-          >
-            {task}
-          </Typography>
-          <Typography
-            variant="caption"
-            sx={{
-              color: theme.palette.common.white,
-              display: "block",
-              marginBottom: "-3px",
-              textDecoration: isComplete ? "line-through" : "none",
-            }}
-          >
-            Created on {dayjs(createdAt).format("DD-MM-YY")}
-          </Typography>
-          <Typography
-            variant="caption"
-            sx={{
-              color: theme.palette.common.white,
-              display: "block",
-              textDecoration: isComplete ? "line-through" : "none",
-            }}
-          >
-            Due by {dayjs(dueDate).format("DD-MM-YY")}
-          </Typography>
-        </CardContent>
+          />
+          <CardContent sx={{ flex: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: theme.palette.common.white,
+                display: "block",
+                textDecoration: isComplete ? "line-through" : "none",
+              }}
+            >
+              {task}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: theme.palette.common.white,
+                display: "block",
+                marginBottom: "-3px",
+                textDecoration: isComplete ? "line-through" : "none",
+              }}
+            >
+              Created on {dayjs(createdAt).format("DD-MM-YY")}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: theme.palette.common.white,
+                display: "block",
+                textDecoration: isComplete ? "line-through" : "none",
+              }}
+            >
+              Due by {dayjs(dueDate).format("DD-MM-YY")}
+            </Typography>
+          </CardContent>
+        </Box>
         <CardActions>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <IconButton
