@@ -42,6 +42,8 @@ const TodoForm: React.FC<TodoFormProps> = ({
 
   const { colours } = useContext(ColoursContext);
 
+  console.log(colours);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column">
@@ -102,7 +104,11 @@ const TodoForm: React.FC<TodoFormProps> = ({
               >
                 <DatePicker
                   slotProps={{
-                    textField: { variant: "outlined", size: "small" },
+                    textField: {
+                      variant: "outlined",
+                      size: "small",
+                      label: "Due Date",
+                    },
                   }}
                   value={dayjs(field.value)}
                   onChange={(date) => {
@@ -167,7 +173,9 @@ const TodoForm: React.FC<TodoFormProps> = ({
           </FormHelperText>
         </FormControl>
 
-        <Button type="submit">{mode} Todo</Button>
+        <Button data-testid="submitbtn" type="submit">
+          {mode} Todo
+        </Button>
       </Box>
     </form>
   );
