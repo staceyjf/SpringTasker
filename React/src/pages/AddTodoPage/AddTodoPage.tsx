@@ -10,6 +10,7 @@ import { Alert, Backdrop, Snackbar } from "@mui/material";
 const AddTodoPage = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<Error | null>(null);
+  const [open, setOpen] = useState(false);
 
   const defaultValues = {
     title: "Keep me short and sweet",
@@ -17,6 +18,17 @@ const AddTodoPage = () => {
     dueDate: new Date().toISOString(), // convert to a string with the relevant format
     isComplete: false,
     colourId: "",
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   const onSubmit: SubmitHandler<TodoFormData> = async (data) => {
@@ -28,6 +40,7 @@ const AddTodoPage = () => {
       setError(null);
     } catch (e) {
       setError(new Error("Failed to submit your new todo. Please try again."));
+      setOpen(true);
       console.error(e);
     }
   };
@@ -36,17 +49,14 @@ const AddTodoPage = () => {
     <div style={{ width: "80%" }}>
       <h1 style={{ margin: "0 0 0.5rem 0" }}>Create a new Todo task</h1>
       {error && (
-        <Backdrop open={true} sx={{ color: "#fff", zIndex: 1 }}>
-          <Snackbar
-            open={true}
-            autoHideDuration={6000}
-            onClose={() => setError(null)}
-          >
+        <Backdrop open={open} sx={{ color: "#fff", zIndex: 1 }}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert
               severity="error"
               variant="filled"
+              onClose={handleClose}
               sx={{ width: "100%" }}
-              aria-live="assertive"
+              data-testid="error-alert"
             >
               {error?.message}
             </Alert>

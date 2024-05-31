@@ -66,7 +66,7 @@ const TodoCard = ({
           data-testid="divider"
           data-divider-colour={colourCatergorisation}
         />
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" flex="1">
           <CardHeader
             title={title}
             sx={{

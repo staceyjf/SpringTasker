@@ -27,12 +27,12 @@ describe("Header", () => {
 
     // user interaction
     const logo = screen.getByAltText("Spring Tasker Logo");
-    userEvent.click(logo);
+    await userEvent.click(logo);
 
     // check to see if we are on the home page post a click
     const locationDisplay = await screen.findByTestId("location-display");
 
-    // await due to async operations like the API call to getAllTodos
+    // check if this can be removed
     await waitFor(() => {
       expect(locationDisplay).toHaveTextContent("/todo");
     });

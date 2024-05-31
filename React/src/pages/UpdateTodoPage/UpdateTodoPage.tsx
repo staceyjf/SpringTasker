@@ -16,7 +16,7 @@ const UpdateTodoPage = () => {
   >();
   const [error, setError] = useState<Error | null>(null);
   const [fetchStatus, setFetchStatus] = useState<String>("LOADING");
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getTodoById(todoId)
@@ -33,11 +33,22 @@ const UpdateTodoPage = () => {
       })
       .catch((e: Error) => {
         setError(new Error("Failed to update your todo. Please try again."));
-        setOpenSnackbar(true);
+        setOpen(true);
         setFetchStatus("FAILED");
         console.error(e);
       });
   }, []);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const onSubmit: SubmitHandler<TodoFormData> = (data) => {
     if (isNaN(todoId)) {
@@ -53,7 +64,7 @@ const UpdateTodoPage = () => {
         setError(
           new Error("Failed to submit your edited todo. Please try again.")
         );
-        setOpenSnackbar(true);
+        setOpen(true);
         console.error(e);
       });
   };
@@ -77,16 +88,14 @@ const UpdateTodoPage = () => {
         </>
       )}
       {fetchStatus === "FAILED" && (
-        <Backdrop open={openSnackbar} sx={{ color: "#fff", zIndex: 1 }}>
-          <Snackbar
-            open={openSnackbar}
-            autoHideDuration={6000}
-            onClose={() => {
-              setError(null);
-              setOpenSnackbar(false);
-            }}
-          >
-            <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+        <Backdrop open={open} sx={{ color: "#fff", zIndex: 1 }}>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              severity="error"
+              variant="filled"
+              onClose={handleClose}
+              sx={{ width: "100%" }}
+            >
               {error?.message}
             </Alert>
           </Snackbar>
@@ -96,13 +105,17 @@ const UpdateTodoPage = () => {
         <>
           <h1>Edit `{defaultValues?.title}` Todo</h1>
           {error && (
-            <Backdrop open={true} sx={{ color: "#fff", zIndex: 1 }}>
-              <Snackbar open={true} autoHideDuration={6000}>
+            <Backdrop open={open} sx={{ color: "#fff", zIndex: 1 }}>
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+              >
                 <Alert
                   severity="error"
                   variant="filled"
+                  onClose={handleClose}
                   sx={{ width: "100%" }}
-                  aria-live="assertive"
                 >
                   {error?.message}
                 </Alert>

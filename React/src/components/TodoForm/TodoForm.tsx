@@ -92,7 +92,7 @@ const TodoForm: React.FC<TodoFormProps> = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel>Due date</FormLabel>
+          {/* <FormLabel>Due date</FormLabel> */}
           <Controller
             name="dueDate"
             control={control}
