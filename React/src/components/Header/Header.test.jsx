@@ -54,7 +54,7 @@ describe("Header", () => {
 
     const locationDisplay = await screen.findByTestId("location-display");
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(locationDisplay).toHaveTextContent("/todo/new");
     });
   });

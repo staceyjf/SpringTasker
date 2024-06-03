@@ -48,6 +48,7 @@ const TodoIndex = () => {
       setOpenModal(false);
     } catch (e: any) {
       setError(new Error("Failed to delete todo. Please try again."));
+      setFetchStatus("FAILED");
       console.error(e);
     }
   };
@@ -85,6 +86,7 @@ const TodoIndex = () => {
       setTodos(await getAllTodos()); //update all todos
     } catch (e: any) {
       setError(new Error("Failed to update todo status. Please try again."));
+      setFetchStatus("FAILED");
       console.error(e);
     }
   };
@@ -99,7 +101,7 @@ const TodoIndex = () => {
             rowGap="0.5rem"
             justifyContent="center"
           >
-            <Skeleton />
+            <Skeleton data-testid="loading" />
             <Skeleton width="80%" />
             <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
             <Skeleton variant="rounded" width="100%" height={60}></Skeleton>
@@ -119,6 +121,7 @@ const TodoIndex = () => {
               variant="filled"
               sx={{ width: "100%" }}
               aria-live="assertive"
+              data-testid="error-alert"
             >
               {error?.message}
             </Alert>

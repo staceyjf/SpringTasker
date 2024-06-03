@@ -61,32 +61,6 @@ describe("TodoCard", () => {
     expect(switchElement).not.toBeChecked();
   });
 
-  // it("should cross out task when the switch is toggled to true", async () => {
-  //   let todoStatus = screen.getByTestId("todo-status");
-  //   let switchElement = screen.getByRole("checkbox");
-
-  //   expect(switchElement).not.toBeChecked();
-  //   expect(todoStatus.getAttribute("data-completed")).toEqual("not-crossed");
-
-  //   await userEvent.click(switchElement);
-
-  //   // re-render with the new todo
-  //   render(
-  //     <TodoCard
-  //       task="My test paragraph with lots and lots of words."
-  //       isComplete={true}
-  //       handleIsComplete={isCompleteMock}
-  //     />
-  //   );
-
-  //   // Re-query for the switch element and todoStatus
-  //   switchElement = screen.getByRole("checkbox");
-  //   todoStatus = screen.getByTestId("todo-status");
-
-  //   expect(switchElement).toBeChecked();
-  //   expect(todoStatus.getAttribute("data-completed")).toEqual("crossed-out");
-  // });
-
   //-----------on click - delete & edit-----------
   it("should call deleteOnClick with the right id value, multiple times", async () => {
     const btn = screen.getByLabelText("delete");

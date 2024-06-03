@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
 import { TodoFormData } from "../../components/TodoForm/TodoSchema";
@@ -21,7 +21,7 @@ const AddTodoPage = () => {
   };
 
   const handleClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -33,9 +33,7 @@ const AddTodoPage = () => {
 
   const onSubmit: SubmitHandler<TodoFormData> = async (data) => {
     try {
-      console.log(data);
-      const response = await createTodo(data);
-      console.log("Todo created", response);
+      await createTodo(data);
       navigate("/todo");
       setError(null);
     } catch (e) {

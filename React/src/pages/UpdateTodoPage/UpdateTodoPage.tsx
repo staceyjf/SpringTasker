@@ -40,7 +40,7 @@ const UpdateTodoPage = () => {
   }, []);
 
   const handleClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
@@ -57,8 +57,9 @@ const UpdateTodoPage = () => {
     }
 
     updateTodoById(todoId, data)
-      .then((data) => {
+      .then((_data) => {
         navigate("/todo");
+        setError(null);
       })
       .catch((e: Error) => {
         setError(
@@ -78,6 +79,7 @@ const UpdateTodoPage = () => {
             flexDirection="column"
             rowGap="0.5rem"
             justifyContent="center"
+            data-testid="loading"
           >
             <Skeleton />
             <Skeleton width="60%" />

@@ -42,8 +42,6 @@ const TodoForm: React.FC<TodoFormProps> = ({
 
   const { colours } = useContext(ColoursContext);
 
-  console.log(colours);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column">

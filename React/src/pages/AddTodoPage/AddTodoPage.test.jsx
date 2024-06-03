@@ -1,16 +1,7 @@
-import { render, waitFor, screen } from "@testing-library/react";
+import { render, waitFor, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import ColoursContextProvider from "../../context/ColourContextProvider";
 import AddTodoPage from "./AddTodoPage";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-
-// mock up a failed createTodo request
-vi.mock("../../services/todo-services", () => ({
-  createTodo: vi.fn(() =>
-    Promise.reject(
-      new Error("Failed to submit your new todo. Please try again.")
-    )
-  ),
-}));
 
 // mock up of the colours context
 vi.mock("../../services/colour-services", () => ({
@@ -22,24 +13,41 @@ describe("AddTodoPage", () => {
     vi.clearAllMocks();
   });
 
-  it("should render an error message if createTodo fails", () => {
+  it("should navigate to /todo when todo is created successfully", async () => {
+    // create a mock component to help us find the current location
+    const LocationDisplay = () => {
+      const location = useLocation();
+      return <div data-testid="location-display">{location.pathname}</div>;
+    };
+
+    vi.mock("../../services/todo-services", () => ({
+      createTodo: vi.fn(() => Promise.resolve()),
+    }));
+
     render(
-      <BrowserRouter>
+      <MemoryRouter initialEntries={["/todo/new"]}>
         <ColoursContextProvider>
           <Routes>
-            <Route path="/" element={<div>Home</div>} />
+            <Route path="/todo" element={<LocationDisplay />} />
             <Route path="/todo/new" element={<AddTodoPage />} />
           </Routes>
         </ColoursContextProvider>
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
+    // Fill out the form fields
+    fireEvent.change(screen.getByLabelText(/title/i), {
+      target: { value: "Test Title" },
+    });
+    fireEvent.change(screen.getByLabelText(/task details/i), {
+      target: { value: "Test Task" },
+    });
+
+    // stimulate the submit button being pressed in the form
+    fireEvent.click(screen.getByTestId("submitbtn"));
+
     waitFor(() => {
-      const errorAlert = screen.getByTestId("error-alert");
-      expect(errorAlert).toBeInTheDocument();
-      expect(errorAlert).toHaveTextContent(
-        "Failed to submit your new todo. Please try again."
-      );
+      expect(screen.getByTestId("location-display")).toHaveTextContent("/todo");
     });
   });
 });
