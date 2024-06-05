@@ -48,9 +48,9 @@ Explore the spring API documentation at: http://localhost:8080/swagger-ui/index.
 
 ## Screenshots
 
-| New Todo form                                                         | Update Todo form                                                         | Test                                                           |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| <img src="./React/public/newtodoform.png" width="200" height="200" /> | <img src="./React/public/updatetodoform.png" width="200" height="200" /> | <img src="./React/public/test.png" width="200" height="200" /> |
+| New Todo form                                 | Update Todo form                                 | Test                                   |
+| --------------------------------------------- | ------------------------------------------------ | -------------------------------------- |
+| <img src="./React/public/newtodoform.png"  /> | <img src="./React/public/updatetodoform.png"  /> | <img src="./React/public/test.png"  /> |
 
 ## Technologies Used
 
