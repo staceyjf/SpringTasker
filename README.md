@@ -3,10 +3,10 @@
 A fullstack todo powered by React, Spring and mySql.
 
 <div align="center">
-  <img src="./React/public/homepage.png" alt="Todo Homepage" width="700">
+  <img src="./React/public/springtasker.gif" alt="Todo Homepage" width="700">
 </div>
 
-## To run
+## Build Steps
 
 1. Clone the repo.
 2. Run npm install to install the relevant dependencies.
@@ -48,9 +48,9 @@ Explore the spring API documentation at: http://localhost:8080/swagger-ui/index.
 
 ## Screenshots
 
-| New Todo form                               | Update Todo form                                  |
-| ------------------------------------------- | ------------------------------------------------- |
-| ![New Form](./React/public/newtodoform.png) | ![Update Form](./React/public/updatetodoform.png) |
+| New Todo form                                                         | Update Todo form                                                         | Test                                                           |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| <img src="./React/public/newtodoform.png" width="200" height="200" /> | <img src="./React/public/updatetodoform.png" width="200" height="200" /> | <img src="./React/public/test.png" width="200" height="200" /> |
 
 ## Technologies Used
 
