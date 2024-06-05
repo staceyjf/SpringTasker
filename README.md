@@ -3,7 +3,7 @@
 A fullstack todo powered by React, Spring and mySql.
 
 <div align="center">
-  <img src="./React/public/springtasker.gif" alt="Todo Homepage" width="700">
+  <img src="./React/public/springtasker.gif" alt="Todo Homepage">
 </div>
 
 ## Build Steps
